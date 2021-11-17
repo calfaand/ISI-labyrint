@@ -32,6 +32,10 @@ def map():
 FPS = 60
 display_surface = pygame.display.set_mode((500, 500 ))
 
+
+
+
+
 def map_in_gui():
 
     for row in range(15):        #ze pocet rows
@@ -68,3 +72,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#dushan
