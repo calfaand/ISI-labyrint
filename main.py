@@ -12,7 +12,7 @@ GREEN = (0,255,0)
 maps=[]
 W=20
 H=20
-MARGIN=5
+MARGIN=15
 
 WALL = pygame.image.load('assets/wall.png')
 
@@ -42,11 +42,12 @@ display_surface = pygame.display.set_mode((500, 500 ))
 
 def map_in_gui():
 
-    for row in range(1,10):        #ze pocet rows
-        for col in range(1,10):     # pocet cols
-            if maps[row][col]==0:
-                break
-            display_surface.blit(WALL, (row*MARGIN,col*MARGIN))
+    for row in range(len(maps)):        #ze pocet rows
+        for col in range(len(maps[0])):     # pocet cols
+            if maps[row][col] == '0':
+                continue
+            display_surface.blit(WALL, (row*MARGIN, col*MARGIN))
+
 
     pygame.display.flip()
 
@@ -55,9 +56,7 @@ def map_in_gui():
 def draw_window():                          #vytvori bielu plochu a bude sa updatovat
     WIN.fill(WHITE)
     #map()
-    # map_in_gui()
-    # display_surface.blit(WALL, (1, 1))
-    # display_surface.blit(WALL, (30, 30))
+    map_in_gui()
 
     pygame.display.update()
 
