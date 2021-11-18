@@ -18,7 +18,7 @@ WALL = pygame.image.load('assets/wall.png')
 
 def map():
 
-    with open('maps/map1.txt', 'r') as f:
+    with open('maps/map2.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             maps.append(line.strip('\n').split(','))     # map je teraz 2d arr
@@ -72,5 +72,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 #dushan
