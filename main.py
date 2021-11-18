@@ -14,30 +14,18 @@ W=20
 H=20
 MARGIN=15
 
+
+FPS = 60
+display_surface = pygame.display.set_mode((500, 500 ))
 WALL = pygame.image.load('assets/wall.png')
 
 
 def map():
-    # maps = np.genfromtxt('maps/map1.txt', dtype=None)
-    # print (maps)
 
     with open('maps/map1.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             maps.append(line.strip('\n').split(' '))# map je teraz 2d arr
-
-    print (maps)
-
-        # for line in map:
-        #     map.append(line.strip())
-
-
-
-
-FPS = 60
-display_surface = pygame.display.set_mode((500, 500 ))
-
-
 
 
 def map_in_gui():
@@ -63,10 +51,8 @@ def draw_window():                          #vytvori bielu plochu a bude sa upda
 
 def main():
     clock = pygame.time.Clock()
-
     run = True
     map()
-    print(maps[1][1])
     while run:
         clock.tick(FPS) #max fps 60
         for event in pygame.event.get():
