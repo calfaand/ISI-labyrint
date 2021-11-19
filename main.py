@@ -23,6 +23,9 @@ font = "ariel"
 WALL = pygame.image.load('assets/wall.png')
 
 
+#https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
+
+
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -91,7 +94,6 @@ def main():
     run = True
     selected= 'start'
 
-    # map()
     while run:
         clock.tick(FPS)  # max fps 60
         for event in pygame.event.get():
