@@ -18,9 +18,9 @@ W = 20
 H = 20
 MARGIN = 15
 FPS = 60
-font = "Retro.ttf"
+font = "ariel"
+
 WALL = pygame.image.load('assets/wall.png')
-selected = 'start'
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -36,28 +36,28 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
-def menu():
-    screen.fill(BLUE)
-    title = text_format("Labyrint", font, 90, WHITE)
-    if selected == 'start':
-        text_start = text_format('START', font, 75, WHITE)
-    else:
-        text_start = text_format('START', font, 75, BLACK)
-    if selected == 'quit':
-        text_quit = text_format('QUIT', font, 75, WHITE)
-    else:
-        text_quit = text_format('QUIT', font, 75, BLACK)
-
-    title_rect = title.get_rect()
-    start_rect = text_start.get_rect()
-    quit_rect = text_quit.get_rect()
-
-    # menu text
-    screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
-    screen.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
-    screen.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
-
-    pygame.display.update()
+# def menu():
+#     screen.fill(BLUE)
+#     title = text_format("Labyrint", font, 90, WHITE)
+#     if selected == 'start':
+#         text_start = text_format('START', font, 75, WHITE)
+#     else:
+#         text_start = text_format('START', font, 75, BLACK)
+#     if selected == 'quit':
+#         text_quit = text_format('QUIT', font, 75, WHITE)
+#     else:
+#         text_quit = text_format('QUIT', font, 75, BLACK)
+#
+#     title_rect = title.get_rect()
+#     start_rect = text_start.get_rect()
+#     quit_rect = text_quit.get_rect()
+#
+#     # menu text
+#     screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
+#     screen.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
+#     screen.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
+#
+#     pygame.display.update()
 
 
 def map():
@@ -78,6 +78,7 @@ def map_in_gui():
 
 
 def draw_window():  # vytvori bielu plochu a bude sa updatovat
+    pygame.display.update()
     screen.fill(WHITE)
     # map()
     map_in_gui()
@@ -88,6 +89,7 @@ def draw_window():  # vytvori bielu plochu a bude sa updatovat
 def main():
     clock = pygame.time.Clock()
     run = True
+    selected= 'start'
 
     # map()
     while run:
@@ -103,14 +105,34 @@ def main():
                 if event.key == pygame.K_RETURN:
                     if selected == 'start':
                         print('start')
-                        draw_window()
+
 
                     if selected == 'quit':
                         print('quit')
                         pygame.quit()
                         quit()
 
-        menu()
+        screen.fill(BLUE)
+        title = text_format("Labyrint", font, 90, WHITE)
+        if selected == 'start':
+            text_start = text_format('START', font, 75, WHITE)
+        else:
+            text_start = text_format('START', font, 75, BLACK)
+        if selected == 'quit':
+            text_quit = text_format('QUIT', font, 75, WHITE)
+        else:
+            text_quit = text_format('QUIT', font, 75, BLACK)
+
+        title_rect = title.get_rect()
+        start_rect = text_start.get_rect()
+        quit_rect = text_quit.get_rect()
+
+        # menu text
+        screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
+        screen.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
+        screen.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
+
+        pygame.display.update()
         # draw_window()
 
     pygame.quit()
