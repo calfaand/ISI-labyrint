@@ -68,11 +68,17 @@ def mario_moving_in_game():
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    if maps[mario_is_on_x+1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                    if maps[mario_is_on_x+1][mario_is_on_y ] == '0' or maps[mario_is_on_x+1][mario_is_on_y ] == '3' :  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        if maps[mario_is_on_x+1][mario_is_on_y] == '3':
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
+                            win_game()
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
 
                 if event.key == pygame.K_UP:
-                    if maps[mario_is_on_x-1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                    if maps[mario_is_on_x-1][mario_is_on_y ] == '0' or maps[mario_is_on_x-1][mario_is_on_y ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        if maps[mario_is_on_x-1][mario_is_on_y] == '3':
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
+                            win_game()
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
 
                 if event.key == pygame.K_LEFT:
@@ -86,7 +92,10 @@ def mario_moving_in_game():
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
 
                 if event.key == pygame.K_RIGHT:
-                    if maps[mario_is_on_x][mario_is_on_y+1 ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                    if maps[mario_is_on_x][mario_is_on_y+1 ] == '0' or maps[mario_is_on_x][mario_is_on_y+1 ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        if maps[mario_is_on_x][mario_is_on_y+1] == '3':
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
+                            win_game()
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
 
         new_map()
