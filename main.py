@@ -39,10 +39,10 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
-def map():
+def map(self):
 
     print(' som v map')
-    with open('maps/map2.txt', 'r') as f:
+    with open('maps/map'+str(self)+ '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
@@ -61,16 +61,16 @@ def map_in_gui():
     pygame.display.flip()
 
 
-def draw_window():  # vytvori bielu plochu a bude sa updatovat
+def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
     #pygame.display.update()
     print('draw_window')
 
     screen.fill(WHITE)
-    map()
+    map(self)
     #map_in_gui()
 
 
-def game_window():
+def game_window(self):
     clock = pygame.time.Clock()  # iba pre fps
     t=1
     run = True
@@ -80,7 +80,7 @@ def game_window():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
         if t==1:
-            draw_window()       # presne tuto sa to zacykluje
+            draw_window(self)       # presne tuto sa to zacykluje
             t+=1
 
 
@@ -108,7 +108,7 @@ def main():
                 if event.key == pygame.K_RETURN:  # ked sa stlaci enter
                     if pressed == 0:
                         print('level 1')
-                        return game_window()
+                        return 1
                     elif pressed == -1:
                         print('level 2')
                         return 2
@@ -162,8 +162,9 @@ def main():
 
 if __name__ == "__main__":
     a=main()
-    # print(a)
-    # print('vonku z main')
-    # game_window()
+    print(a)
+    print('vonku z main')
+    #treba mi zavolat game window s cislom mapy, z kade to odislo z R:108
+    game_window(a)
 
 # dushan
