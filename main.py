@@ -71,6 +71,8 @@ def map():
 
 
 def map_in_gui():
+    pygame.display.update()
+
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '0':
@@ -82,11 +84,11 @@ def map_in_gui():
 
 def draw_window():  # vytvori bielu plochu a bude sa updatovat
     pygame.display.update()
+    print('som tu ale nic enrobim')
+
     screen.fill(WHITE)
     # map()
     map_in_gui()
-
-    pygame.display.update()
 
 
 def main():
@@ -101,7 +103,7 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if pressed <0:
+                    if pressed < 0:
                         pressed += 1
                     print(pressed)
                 elif event.key == pygame.K_DOWN:
@@ -112,6 +114,7 @@ def main():
                 if event.key == pygame.K_RETURN:  # ked sa stlaci ented
                     if pressed == 0:
                         print('level 1')
+                        draw_window()
                     elif pressed == -1:
                         print('level 2')
                     elif pressed == -2:
@@ -125,7 +128,7 @@ def main():
                         pygame.quit()
                         quit()
 
-        screen.fill(BLUE)
+        screen.fill(BLUE)                   # priprava na vypisanie na uvodnu obrazovku
         title = text_format("Labyrint", font, 90, WHITE)
         if pressed == 0:
             text_level = text_format('LEVEL 1', font, 75, WHITE)
@@ -150,9 +153,9 @@ def main():
 
         # menu text
         screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
-        screen.blit(text_up, (WIDTH / 2, 200))  # toto bude ^
+        screen.blit(text_up, (WIDTH / 2 -(up_rect[2] / 2), 200))  # toto bude ^
         screen.blit(text_level, (WIDTH / 2 - (start_rect[2] / 2), 260))  # toto sa bude menit, vypis daneho lvl
-        screen.blit(text_down, (WIDTH / 2, 320))  # toto bude znazornenie ze sa da ist dole
+        screen.blit(text_down, (WIDTH / 2 -(down_rect[2] / 2), 320))  # toto bude znazornenie ze sa da ist dole
 
         pygame.display.update()
         # draw_window()
