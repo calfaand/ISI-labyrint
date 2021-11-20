@@ -72,49 +72,47 @@ def mario_moving_in_game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     if maps[mario_is_on_x+1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        print('tu')
-                        maps[mario_is_on_x][mario_is_on_y] = '0'
-                        print(mario_is_on_x, mario_is_on_y)
-                        mario_is_on_x += 1
-
-                        maps[mario_is_on_x][mario_is_on_y] = '2'
-                        print(mario_is_on_x, mario_is_on_y)
-                        new_map()
+                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
 
                 if event.key == pygame.K_UP:
                     if maps[mario_is_on_x-1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        print('tu')
-                        maps[mario_is_on_x][mario_is_on_y] = '0'
-                        print(mario_is_on_x, mario_is_on_y)
-                        mario_is_on_x -= 1
-
-                        maps[mario_is_on_x][mario_is_on_y] = '2'
-                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
 
                 if event.key == pygame.K_LEFT:
-                    if maps[mario_is_on_x][mario_is_on_y-1] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        print('tu')
-                        maps[mario_is_on_x][mario_is_on_y] = '0'
-                        print(mario_is_on_x, mario_is_on_y)
-                        mario_is_on_y -= 1
+                    if maps[mario_is_on_x][mario_is_on_y-1] == '0' or maps[mario_is_on_x][mario_is_on_y-1] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        if maps[mario_is_on_x][mario_is_on_y-1] == '3':
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
+                            print('Congratulation')     # UROBIT NOVU OBRRAZOVKU TAK JA ZACIATOCNU
+                            break
 
-                        maps[mario_is_on_x][mario_is_on_y] = '2'
-                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
 
                 if event.key == pygame.K_RIGHT:
                     if maps[mario_is_on_x][mario_is_on_y+1 ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        print('tu')
-                        maps[mario_is_on_x][mario_is_on_y] = '0'
-                        print(mario_is_on_x, mario_is_on_y)
-                        mario_is_on_y += 1
-
-                        maps[mario_is_on_x][mario_is_on_y] = '2'
-                        print(mario_is_on_x, mario_is_on_y)
-
-
+                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
 
         new_map()
         pygame.display.update()     #ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
+
+
+def move_mario(x, y, direct):
+    maps[x][y] = '0'
+    print(x, y)
+
+    if direct == pygame.K_UP:
+        x -= 1
+    elif direct == pygame.K_DOWN:
+        x += 1
+    elif direct == pygame.K_LEFT:
+        y -= 1
+    elif direct == pygame.K_RIGHT:
+        y += 1
+    else:
+        print("Fuck this shit")
+
+    maps[x][y] = '2'
+    print(x, y)
+    return x,y
 
 def new_map():
 
