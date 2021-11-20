@@ -39,40 +39,19 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
-# def menu():
-#     screen.fill(BLUE)
-#     title = text_format("Labyrint", font, 90, WHITE)
-#     if selected == 'start':
-#         text_start = text_format('START', font, 75, WHITE)
-#     else:
-#         text_start = text_format('START', font, 75, BLACK)
-#     if selected == 'quit':
-#         text_quit = text_format('QUIT', font, 75, WHITE)
-#     else:
-#         text_quit = text_format('QUIT', font, 75, BLACK)
-#
-#     title_rect = title.get_rect()
-#     start_rect = text_start.get_rect()
-#     quit_rect = text_quit.get_rect()
-#
-#     # menu text
-#     screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))
-#     screen.blit(text_start, (WIDTH / 2 - (start_rect[2] / 2), 300))
-#     screen.blit(text_quit, (WIDTH / 2 - (quit_rect[2] / 2), 360))
-#
-#     pygame.display.update()
-
-
 def map():
+
+    print(' som v map')
     with open('maps/map2.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+    map_in_gui()
 
 
 def map_in_gui():
-    pygame.display.update()
-
+    #pygame.display.update()
+    print('map in gui')
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '0':
@@ -83,16 +62,29 @@ def map_in_gui():
 
 
 def draw_window():  # vytvori bielu plochu a bude sa updatovat
-    pygame.display.update()
-    print('som tu ale nic enrobim')
+    #pygame.display.update()
+    print('draw_window')
 
     screen.fill(WHITE)
-    # map()
-    map_in_gui()
+    map()
+    #map_in_gui()
+
+
+def game_window():
+    clock = pygame.time.Clock()  # iba pre fps
+    run = True
+    while run:
+        clock.tick(FPS)  # max fps 60
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
+                run = False
+
+        draw_window()       # presne tuto sa to zacykluje
+
 
 
 def main():
-    clock = pygame.time.Clock()
+    clock = pygame.time.Clock()  # iba pre fps
     run = True
     pressed = 0
     while run:
@@ -103,32 +95,36 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
+
                     if pressed < 0:
                         pressed += 1
-                    print(pressed)
+
                 elif event.key == pygame.K_DOWN:
                     if pressed > -5:
                         pressed -= 1
-                    print(pressed)
 
-                if event.key == pygame.K_RETURN:  # ked sa stlaci ented
+                if event.key == pygame.K_RETURN:  # ked sa stlaci enter
                     if pressed == 0:
                         print('level 1')
-                        draw_window()
+                        return game_window()
                     elif pressed == -1:
                         print('level 2')
+                        return 2
                     elif pressed == -2:
                         print('level 3')
+                        return 3
                     elif pressed == -3:
                         print('level 4')
+                        return 4
                     elif pressed == -4:
                         print('level 5')
+                        return 5
                     elif pressed == -5:
                         print('quit')
                         pygame.quit()
                         quit()
 
-        screen.fill(BLUE)                   # priprava na vypisanie na uvodnu obrazovku
+        screen.fill(BLUE)  # priprava na vypisanie na uvodnu obrazovku
         title = text_format("Labyrint", font, 90, WHITE)
         if pressed == 0:
             text_level = text_format('LEVEL 1', font, 75, WHITE)
@@ -153,17 +149,19 @@ def main():
 
         # menu text
         screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
-        screen.blit(text_up, (WIDTH / 2 -(up_rect[2] / 2), 200))  # toto bude ^
+        screen.blit(text_up, (WIDTH / 2 - (up_rect[2] / 2), 200))  # toto bude ^
         screen.blit(text_level, (WIDTH / 2 - (start_rect[2] / 2), 260))  # toto sa bude menit, vypis daneho lvl
-        screen.blit(text_down, (WIDTH / 2 -(down_rect[2] / 2), 320))  # toto bude znazornenie ze sa da ist dole
+        screen.blit(text_down, (WIDTH / 2 - (down_rect[2] / 2), 320))  # toto bude znazornenie ze sa da ist dole
 
         pygame.display.update()
-        # draw_window()
 
-    pygame.quit()
+    # pygame.quit()
 
 
 if __name__ == "__main__":
-    main()
+    a=main()
+    # print(a)
+    # print('vonku z main')
+    # game_window()
 
 # dushan
