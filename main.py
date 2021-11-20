@@ -1,4 +1,5 @@
 import pygame
+from enum import Enum
 from pygame.locals import *
 
 pygame.init()
@@ -19,11 +20,14 @@ H = 20
 MARGIN = 15
 FPS = 60
 font = "ariel"
-
 WALL = pygame.image.load('assets/wall.png')
 
 
 # https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
+
+class Type(Enum):
+    FREE = 0
+    WALL = 1
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -40,9 +44,8 @@ def text_format(message, textFont, textSize, textColor):
 
 
 def map(self):
-
     print(' som v map')
-    with open('maps/map'+str(self)+ '.txt', 'r') as f:
+    with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
@@ -50,39 +53,41 @@ def map(self):
 
 
 def map_in_gui():
-    #pygame.display.update()
+    # pygame.display.update()
     print('map in gui')
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '0':
+                # Type.FREE=maps[row][col]
                 continue
+            # else:
+            #     Type.Wall = maps[row][col]
             screen.blit(WALL, (row * MARGIN, col * MARGIN))
 
     pygame.display.flip()
 
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
-    #pygame.display.update()
+    # pygame.display.update()
     print('draw_window')
 
     screen.fill(WHITE)
     map(self)
-    #map_in_gui()
+    # map_in_gui()
 
 
 def game_window(self):
     clock = pygame.time.Clock()  # iba pre fps
-    t=1
+    t = 1
     run = True
     while run:
         clock.tick(FPS)  # max fps 60
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
-        if t==1:
-            draw_window(self)       # presne tuto sa to zacykluje
-            t+=1
-
+        if t == 1:
+            draw_window(self)  # presne tuto sa to zacykluje
+            t += 1
 
 
 def main():
@@ -161,10 +166,10 @@ def main():
 
 
 if __name__ == "__main__":
-    a=main()
+    a = main()
     print(a)
     print('vonku z main')
-    #treba mi zavolat game window s cislom mapy, z kade to odislo z R:108
+    # treba mi zavolat game window s cislom mapy, z kade to odislo z R:108
     game_window(a)
 
 # dushan
