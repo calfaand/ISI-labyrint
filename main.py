@@ -22,6 +22,10 @@ FPS = 60
 font = "ariel"
 WALL = pygame.image.load('assets/wall.png')
 MARIO = pygame.image.load('assets/mario.png')
+LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
+LEN_MAP_COL = 0  # sirka vykreslenej mapy
+MX = 0
+MY = 0
 
 
 # https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
@@ -44,6 +48,47 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
+def mario_moving_in_game():
+    mario_width = 16
+    mario_height = 16
+
+    for row in range(len(maps)):  # ze pocet rows
+        for col in range(len(maps[0])):  # pocet cols
+            if maps[row][col] == '2':
+                mario_is_on_x = row
+                mario_is_on_y = col
+                break
+    print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
+    speed = 1
+    run = True
+    while run:
+        screen.blit(MARIO, (mario_is_on_y * MARGIN, mario_is_on_x * MARGIN))
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                quit()
+
+        keys = pygame.key.get_pressed()
+
+
+
+        if keys[pygame.K_DOWN] and maps[mario_is_on_x+1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+            print('tu')
+            maps[mario_is_on_x][mario_is_on_y] = 0
+            mario_is_on_x += 1
+
+            maps[mario_is_on_x][mario_is_on_y] = 2
+
+
+
+
+        pygame.display.update()     #ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
+
+        #map_in_gui()
+
+
 def map(self):
     print(' som v map')
     with open('maps/map' + str(self) + '.txt', 'r') as f:
@@ -56,17 +101,23 @@ def map(self):
 def map_in_gui():
     # pygame.display.update()
     print('map in gui')
+    # LEN_MAP_ROW = 0
+    # LEN_MAP_COL = 0
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
                 screen.blit(MARIO, (col * MARGIN, row * MARGIN))
+
+                continue
+            if maps[row][col] == '0' or maps[row][col] == '3':
                 continue
 
-            if maps[row][col] == '0' or maps[row][col] == '3' :
-                continue
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
+    # LEN_MAP_ROW += row * MARGIN  # toto mozno bude treba naopak
+    # LEN_MAP_COL += col * MARGIN  # toto mozno bude treba nbaopaka
 
     pygame.display.flip()
+    mario_moving_in_game()
 
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
@@ -75,6 +126,7 @@ def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
 
     screen.fill(WHITE)
     map(self)
+
     # map_in_gui()
 
 
