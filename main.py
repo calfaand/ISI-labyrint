@@ -49,8 +49,6 @@ def text_format(message, textFont, textSize, textColor):
 
 
 def mario_moving_in_game():
-    mario_width = 16
-    mario_height = 16
 
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -58,8 +56,7 @@ def mario_moving_in_game():
                 mario_is_on_x = row
                 mario_is_on_y = col
                 break
-    print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
-    speed = 1
+    #print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
     run = True
     while run:
 
@@ -111,7 +108,7 @@ def move_mario(x, y, direct):
         print("Fuck this shit")
 
     maps[x][y] = '2'
-    print(x, y)
+    # print(x, y)
     return x,y
 
 def new_map():
@@ -132,7 +129,7 @@ def new_map():
     pygame.display.flip()
 
 def map(self):
-    print(' som v map')
+    # print(' som v map')
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
@@ -142,9 +139,8 @@ def map(self):
 
 def map_in_gui():
     # pygame.display.update()
-    print('map in gui')
-    # LEN_MAP_ROW = 0
-    # LEN_MAP_COL = 0
+    # print('map in gui')
+
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -155,8 +151,6 @@ def map_in_gui():
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
-    # LEN_MAP_ROW += row * MARGIN  # toto mozno bude treba naopak
-    # LEN_MAP_COL += col * MARGIN  # toto mozno bude treba nbaopaka
 
     pygame.display.flip()
     mario_moving_in_game()
@@ -164,7 +158,7 @@ def map_in_gui():
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
     # pygame.display.update()
-    print('draw_window')
+    #print('draw_window')
 
     screen.fill(WHITE)
     map(self)
