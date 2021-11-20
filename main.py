@@ -279,7 +279,6 @@ if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
-    # treba mi zavolat game window s cislom mapy, z kade to odislo z R:108
     game_window(a)
 
 # dushan
