@@ -72,14 +72,16 @@ def draw_window():  # vytvori bielu plochu a bude sa updatovat
 
 def game_window():
     clock = pygame.time.Clock()  # iba pre fps
+    t=1
     run = True
     while run:
         clock.tick(FPS)  # max fps 60
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
-
-        draw_window()       # presne tuto sa to zacykluje
+        if t==1:
+            draw_window()       # presne tuto sa to zacykluje
+            t+=1
 
 
 
