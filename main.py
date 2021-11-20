@@ -62,32 +62,76 @@ def mario_moving_in_game():
     speed = 1
     run = True
     while run:
-        screen.blit(MARIO, (mario_is_on_y * MARGIN, mario_is_on_x * MARGIN))
+
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    if maps[mario_is_on_x+1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        print('tu')
+                        maps[mario_is_on_x][mario_is_on_y] = '0'
+                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_x += 1
 
-        keys = pygame.key.get_pressed()
+                        maps[mario_is_on_x][mario_is_on_y] = '2'
+                        print(mario_is_on_x, mario_is_on_y)
+                        new_map()
+
+                if event.key == pygame.K_UP:
+                    if maps[mario_is_on_x-1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        print('tu')
+                        maps[mario_is_on_x][mario_is_on_y] = '0'
+                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_x -= 1
+
+                        maps[mario_is_on_x][mario_is_on_y] = '2'
+                        print(mario_is_on_x, mario_is_on_y)
+
+                if event.key == pygame.K_LEFT:
+                    if maps[mario_is_on_x][mario_is_on_y-1] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        print('tu')
+                        maps[mario_is_on_x][mario_is_on_y] = '0'
+                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_y -= 1
+
+                        maps[mario_is_on_x][mario_is_on_y] = '2'
+                        print(mario_is_on_x, mario_is_on_y)
+
+                if event.key == pygame.K_RIGHT:
+                    if maps[mario_is_on_x][mario_is_on_y+1 ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
+                        print('tu')
+                        maps[mario_is_on_x][mario_is_on_y] = '0'
+                        print(mario_is_on_x, mario_is_on_y)
+                        mario_is_on_y += 1
+
+                        maps[mario_is_on_x][mario_is_on_y] = '2'
+                        print(mario_is_on_x, mario_is_on_y)
 
 
 
-        if keys[pygame.K_DOWN] and maps[mario_is_on_x+1][mario_is_on_y ] == '0':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-            print('tu')
-            maps[mario_is_on_x][mario_is_on_y] = 0
-            mario_is_on_x += 1
-
-            maps[mario_is_on_x][mario_is_on_y] = 2
-
-
-
-
+        new_map()
         pygame.display.update()     #ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
-        #map_in_gui()
+def new_map():
 
+    screen.fill(WHITE)
+    for row in range(len(maps)):  # ze pocet rows
+        for col in range(len(maps[0])):  # pocet cols
+            if maps[row][col] == '2':
+                screen.blit(MARIO, (col * MARGIN, row * MARGIN))
+
+                continue
+            if maps[row][col] == '0' or maps[row][col] == '3':
+                continue
+
+            screen.blit(WALL, (col * MARGIN, row * MARGIN))
+
+
+    pygame.display.flip()
 
 def map(self):
     print(' som v map')
@@ -142,6 +186,7 @@ def game_window(self):
         if t == 1:
             draw_window(self)  # presne tuto sa to zacykluje
             print(maps)
+
             t += 1
 
 
