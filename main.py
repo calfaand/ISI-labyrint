@@ -21,6 +21,7 @@ MARGIN = 15
 FPS = 60
 font = "ariel"
 WALL = pygame.image.load('assets/wall.png')
+MARIO = pygame.image.load('assets/mario.png')
 
 
 # https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
@@ -55,13 +56,14 @@ def map(self):
 def map_in_gui():
     # pygame.display.update()
     print('map in gui')
+    once=1
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
+            if maps[row][col] == '0' and once ==1:
+                screen.blit(MARIO, (row * MARGIN, col * MARGIN))
+                once=0
             if maps[row][col] == '0':
-                # Type.FREE=maps[row][col]
                 continue
-            # else:
-            #     Type.Wall = maps[row][col]
             screen.blit(WALL, (row * MARGIN, col * MARGIN))
 
     pygame.display.flip()
