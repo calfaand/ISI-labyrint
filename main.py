@@ -56,15 +56,15 @@ def map(self):
 def map_in_gui():
     # pygame.display.update()
     print('map in gui')
-    once=1
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
-            if maps[row][col] == '0' and once ==1:
-                screen.blit(MARIO, (row * MARGIN, col * MARGIN))
-                once=0
-            if maps[row][col] == '0':
+            if maps[row][col] == '2':
+                screen.blit(MARIO, (col * MARGIN, row * MARGIN))
                 continue
-            screen.blit(WALL, (row * MARGIN, col * MARGIN))
+
+            if maps[row][col] == '0' or maps[row][col] == '3' :
+                continue
+            screen.blit(WALL, (col * MARGIN, row * MARGIN))
 
     pygame.display.flip()
 
@@ -89,6 +89,7 @@ def game_window(self):
                 run = False
         if t == 1:
             draw_window(self)  # presne tuto sa to zacykluje
+            print(maps)
             t += 1
 
 
