@@ -79,8 +79,9 @@ def mario_moving_in_game():
                     if maps[mario_is_on_x][mario_is_on_y-1] == '0' or maps[mario_is_on_x][mario_is_on_y-1] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
                         if maps[mario_is_on_x][mario_is_on_y-1] == '3':
                             mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            print('Congratulation')     # UROBIT NOVU OBRRAZOVKU TAK JA ZACIATOCNU
-                            break
+                            win_game()
+                            # print('Congratulation')     # UROBIT NOVU OBRRAZOVKU TAK JA ZACIATOCNU
+                            # break
 
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
 
@@ -110,6 +111,23 @@ def move_mario(x, y, direct):
     maps[x][y] = '2'
     # print(x, y)
     return x,y
+
+def win_game():
+
+    screen.fill(BLACK)
+    run = True
+    pressed = 0
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
+                run = False
+        win_text = text_format("CONGRATULATION", font, 70, WHITE)
+        win_rect = win_text.get_rect()
+        screen.blit(win_text, (WIDTH / 2 - (win_rect[2] / 2), 80))
+        pygame.display.flip()
+        pygame.time.delay(1000)
+        quit()
+
 
 def new_map():
 
