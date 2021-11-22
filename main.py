@@ -26,6 +26,7 @@ LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam ma
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
 MX = 0
 MY = 0
+steps=0
 
 
 
@@ -48,13 +49,48 @@ def text_format(message, textFont, textSize, textColor):
     newText = newFont.render(message, 0, textColor)
     return newText
 
+def move_down(x,y,steps, dir):
+    # if dir == pygame.K_DOWN:
+    if maps[x + 1][y] == '0' or maps[x + 1][y] == '3':
+        if maps[x + 1][y] == '3':
+            x, y = move_mario(x, y, pygame.K_DOWN)
+            win_game(steps)
+        x, y = move_mario(x, y, pygame.K_DOWN)
+    mario_moving_in_game(steps)
+    
+def move_up(x,y,steps,dir):
+    if maps[x - 1][y] == '0' or maps[x - 1][y] == '3':
+        if maps[x - 1][y] == '3':
+            x, y = move_mario(x, y, pygame.K_UP)
+            win_game(steps)
+        x, y = move_mario(x, y, pygame.K_UP)
+    mario_moving_in_game(steps)
+
+def move_left(x,y,steps, dir):
+    if maps[x][y - 1] == '0' or maps[x][y- 1] == '3':
+        if maps[x][y - 1] == '3':
+            x, y = move_mario(x, y, pygame.K_LEFT)
+            win_game(steps)
+        x, y = move_mario(x, y, pygame.K_LEFT)
+    mario_moving_in_game(steps)
+
+
+def move_right(x,y,steps,dir):
+    if maps[x][y + 1] == '0' or maps[x][y+ 1] == '3':
+        if maps[x][y + 1] == '3':
+            x, y = move_mario(x, y, pygame.K_RIGHT)
+            win_game(steps)
+        x, y = move_mario(x, y, pygame.K_RIGHT)
+    mario_moving_in_game(steps)
 
 
 
 
-def mario_moving_in_game():
 
-    steps=0
+def mario_moving_in_game(steps):
+
+
+    # steps = 0
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -74,32 +110,16 @@ def mario_moving_in_game():
             if event.type == pygame.KEYDOWN:
                 steps+=1
                 if event.key == pygame.K_DOWN:
-                    if maps[mario_is_on_x+1][mario_is_on_y ] == '0' or maps[mario_is_on_x+1][mario_is_on_y ] == '3' :  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        if maps[mario_is_on_x+1][mario_is_on_y] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
-                            win_game(steps)
-                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
+                    move_down(mario_is_on_x, mario_is_on_y, steps, pygame.K_DOWN)
 
                 if event.key == pygame.K_UP:
-                    if maps[mario_is_on_x-1][mario_is_on_y ] == '0' or maps[mario_is_on_x-1][mario_is_on_y ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        if maps[mario_is_on_x-1][mario_is_on_y] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
-                            win_game(steps)
-                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
+                    move_up(mario_is_on_x, mario_is_on_y, steps, pygame.K_UP)
 
                 if event.key == pygame.K_LEFT:
-                    if maps[mario_is_on_x][mario_is_on_y-1] == '0' or maps[mario_is_on_x][mario_is_on_y-1] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        if maps[mario_is_on_x][mario_is_on_y-1] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            win_game(steps)
-                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
+                    move_left(mario_is_on_x, mario_is_on_y, steps, pygame.K_LEFT)
 
                 if event.key == pygame.K_RIGHT:
-                    if maps[mario_is_on_x][mario_is_on_y+1 ] == '0' or maps[mario_is_on_x][mario_is_on_y+1 ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
-                        if maps[mario_is_on_x][mario_is_on_y+1] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
-                            win_game(steps)
-                        mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
+                    move_right(mario_is_on_x, mario_is_on_y, steps, pygame.K_RIGHT)
 
         new_map()
         pygame.display.update()     #ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
@@ -184,7 +204,7 @@ def map_in_gui():
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
 
     pygame.display.flip()
-    mario_moving_in_game()
+    mario_moving_in_game(steps)
 
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
