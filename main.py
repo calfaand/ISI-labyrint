@@ -28,6 +28,7 @@ MX = 0
 MY = 0
 
 
+
 # https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
 
 class Type(Enum):
@@ -48,8 +49,12 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
+
+
+
 def mario_moving_in_game():
 
+    steps=0
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -67,35 +72,33 @@ def mario_moving_in_game():
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
+                steps+=1
                 if event.key == pygame.K_DOWN:
                     if maps[mario_is_on_x+1][mario_is_on_y ] == '0' or maps[mario_is_on_x+1][mario_is_on_y ] == '3' :  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
                         if maps[mario_is_on_x+1][mario_is_on_y] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            win_game()
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
+                            win_game(steps)
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_DOWN)
 
                 if event.key == pygame.K_UP:
                     if maps[mario_is_on_x-1][mario_is_on_y ] == '0' or maps[mario_is_on_x-1][mario_is_on_y ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
                         if maps[mario_is_on_x-1][mario_is_on_y] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            win_game()
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
+                            win_game(steps)
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_UP)
 
                 if event.key == pygame.K_LEFT:
                     if maps[mario_is_on_x][mario_is_on_y-1] == '0' or maps[mario_is_on_x][mario_is_on_y-1] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
                         if maps[mario_is_on_x][mario_is_on_y-1] == '3':
                             mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            win_game()
-                            # print('Congratulation')     # UROBIT NOVU OBRRAZOVKU TAK JA ZACIATOCNU
-                            # break
-
+                            win_game(steps)
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
 
                 if event.key == pygame.K_RIGHT:
                     if maps[mario_is_on_x][mario_is_on_y+1 ] == '0' or maps[mario_is_on_x][mario_is_on_y+1 ] == '3':  # and maps[mario_is_on_x][mario_is_on_y - 1] == '0'
                         if maps[mario_is_on_x][mario_is_on_y+1] == '3':
-                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_LEFT)
-                            win_game()
+                            mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
+                            win_game(steps)
                         mario_is_on_x, mario_is_on_y = move_mario(mario_is_on_x, mario_is_on_y, pygame.K_RIGHT)
 
         new_map()
@@ -121,7 +124,7 @@ def move_mario(x, y, direct):
     # print(x, y)
     return x,y
 
-def win_game():
+def win_game(steps):
 
     screen.fill(BLACK)
     run = True
@@ -130,6 +133,7 @@ def win_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
+        print('winn on ', steps, 'steps')
         win_text = text_format("CONGRATULATION", font, 70, WHITE)
         win_rect = win_text.get_rect()
         screen.blit(win_text, (WIDTH / 2 - (win_rect[2] / 2), 80))
