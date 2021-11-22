@@ -22,6 +22,15 @@ FPS = 60
 font = "ariel"
 WALL = pygame.image.load('assets/wall.png')
 MARIO = pygame.image.load('assets/mario.png')
+NAZOV = pygame.image.load('assets/nazov.png')
+UP = pygame.image.load('assets/hore.png')
+DOWN = pygame.image.load('assets/dole.png')
+LVL1 = pygame.image.load('assets/level1.png')
+LVL2 = pygame.image.load('assets/level2.png')
+LVL3 = pygame.image.load('assets/level3.png')
+LVL4 = pygame.image.load('assets/level4.png')
+LVL5 = pygame.image.load('assets/level5.png')
+
 LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
 MX = 0
@@ -301,7 +310,8 @@ def main():
         up_rect = text_down.get_rect()
 
         # menu text
-        screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
+        # screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
+        screen.blit(NAZOV, (WIDTH / 2 - 162.5, 30))
         screen.blit(text_up, (WIDTH / 2 - (up_rect[2] / 2), 200))  # toto bude ^
         screen.blit(text_level, (WIDTH / 2 - (start_rect[2] / 2), 260))  # toto sa bude menit, vypis daneho lvl
         screen.blit(text_down, (WIDTH / 2 - (down_rect[2] / 2), 320))  # toto bude znazornenie ze sa da ist dole
