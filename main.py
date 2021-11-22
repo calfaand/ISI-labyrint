@@ -30,6 +30,7 @@ LVL2 = pygame.image.load('assets/level2.png')
 LVL3 = pygame.image.load('assets/level3.png')
 LVL4 = pygame.image.load('assets/level4.png')
 LVL5 = pygame.image.load('assets/level5.png')
+QUIT = pygame.image.load('assets/quit.png')
 
 LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
@@ -286,36 +287,34 @@ def main():
                         pygame.quit()
                         quit()
 
-        screen.fill(BLUE)  # priprava na vypisanie na uvodnu obrazovku
+        screen.fill(WHITE)  # priprava na vypisanie na uvodnu obrazovku
         title = text_format("Labyrint", font, 90, WHITE)
         if pressed == 0:
-            text_level = text_format('LEVEL 1', font, 75, WHITE)
+            screen.blit(LVL1, (WIDTH / 2 - 90, 260))
         elif pressed == -1:
-            text_level = text_format('LEVEL 2', font, 75, WHITE)
+            screen.blit(LVL2, (WIDTH / 2 - 90, 260))
         elif pressed == -2:
-            text_level = text_format('LEVEL 3', font, 75, WHITE)
+            screen.blit(LVL3, (WIDTH / 2 - 90, 260))
         elif pressed == -3:
-            text_level = text_format('LEVEL 4', font, 75, WHITE)
+            screen.blit(LVL4, (WIDTH / 2 - 90, 260))
         elif pressed == -4:
-            text_level = text_format('LEVEL 5', font, 75, WHITE)
+            screen.blit(LVL5, (WIDTH / 2 - 90, 260))
         elif pressed == -5:
-            text_level = text_format('QUIT', font, 75, WHITE)
+            text_level = screen.blit(QUIT, (WIDTH / 2 - 65, 260))
 
         text_up = text_format('^', font, 75, WHITE)
         text_down = text_format('v', font, 75, WHITE)
 
-        title_rect = title.get_rect()
-        start_rect = text_level.get_rect()
-        down_rect = text_up.get_rect()
-        up_rect = text_down.get_rect()
+        # title_rect = title.get_rect()
+        # start_rect = text_level.get_rect()
+        # down_rect = text_up.get_rect()
+        # up_rect = text_down.get_rect()
 
         # menu text
         # screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
         screen.blit(NAZOV, (WIDTH / 2 - 162.5, 30))
-        screen.blit(text_up, (WIDTH / 2 - (up_rect[2] / 2), 200))  # toto bude ^
-        screen.blit(text_level, (WIDTH / 2 - (start_rect[2] / 2), 260))  # toto sa bude menit, vypis daneho lvl
-        screen.blit(text_down, (WIDTH / 2 - (down_rect[2] / 2), 320))  # toto bude znazornenie ze sa da ist dole
-
+        screen.blit(UP, (WIDTH / 2 - 20, 210))
+        screen.blit(DOWN, (WIDTH / 2 - 16, 320))
         pygame.display.update()
 
     # pygame.quit()
