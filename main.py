@@ -14,15 +14,17 @@ GRAY = (50, 50, 50)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
+BROWN = (42, 30, 35)
+BROWNLIGHT = (93, 84, 88)
 maps = []
 W = 20
 H = 20
 MARGIN = 24
 FPS = 60
-font = "ariel"
+font = "Visitor TT1 BRK"
 WALL = pygame.image.load('assets/wall.png')
 MARIO = pygame.image.load('assets/mario.png')
-NAZOV = pygame.image.load('assets/nazov.png')
+SIGN = pygame.image.load('assets/nazov.png')
 UP = pygame.image.load('assets/up.png')
 DOWN = pygame.image.load('assets/down.png')
 LVL1 = pygame.image.load('assets/level1.png')
@@ -31,6 +33,7 @@ LVL3 = pygame.image.load('assets/level3.png')
 LVL4 = pygame.image.load('assets/level4.png')
 LVL5 = pygame.image.load('assets/level5.png')
 QUIT = pygame.image.load('assets/quit.png')
+CONGRATS = pygame.image.load('assets/congratulation.png')
 
 LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
@@ -156,7 +159,7 @@ def move_mario(x, y, direct):
 
 def win_game(steps):
 
-    screen.fill(BLACK)
+    screen.fill(WHITE)
     run = True
     pressed = 0
     while run:
@@ -166,12 +169,15 @@ def win_game(steps):
         print('winn on ', steps, 'steps')
         win_text = text_format("CONGRATULATION", font, 70, WHITE)
         win_rect = win_text.get_rect()
-        steps_text= text_format(str(steps) + ' steps', font, 70, WHITE)
+        steps_text2 = text_format(str(steps) + ' steps', font, 70, BROWN)
+        steps_text= text_format(str(steps) + ' steps', font, 70, BROWNLIGHT)
         steps_rect = steps_text.get_rect()
-        screen.blit(win_text, (WIDTH / 2 - (win_rect[2] / 2), 80))
+        # screen.blit(win_text, (WIDTH / 2 - (win_rect[2] / 2), 80))
+        screen.blit(CONGRATS, (WIDTH / 2 - 216, 30))
         screen.blit(steps_text, (WIDTH / 2 - (steps_rect[2] / 2), 160))
+        screen.blit(steps_text2, ((WIDTH / 2 - (steps_rect[2] / 2)-4), 155))
         pygame.display.flip()
-        pygame.time.delay(1000)
+        pygame.time.delay(7000)
         quit()
 
 
@@ -312,7 +318,7 @@ def main():
 
         # menu text
         # screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
-        screen.blit(NAZOV, (WIDTH / 2 - 162.5, 30))
+        screen.blit(SIGN, (WIDTH / 2 - 162.5, 30))
         screen.blit(UP, (WIDTH / 2 - 20, 210))
         screen.blit(DOWN, (WIDTH / 2 - 16, 320))
         pygame.display.update()
