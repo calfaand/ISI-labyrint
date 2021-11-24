@@ -1,6 +1,7 @@
 import pygame
 from enum import Enum
 from pygame.locals import *
+import dfs
 
 pygame.init()
 pygame.font.init()
@@ -251,6 +252,16 @@ def game_window(self):
 
             t += 1
 
+def find_dest():
+    global dest_x, dest_y
+
+    for row in range(len(maps)):  # ze pocet rows
+        for col in range(len(maps[0])):  # pocet cols
+            if maps[row][col] == '3':
+                dest_x = row
+                dest_y = col
+            break
+
 
 def main():
     clock = pygame.time.Clock()  # iba pre fps
@@ -330,6 +341,9 @@ if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
+    res = dfs(maps, )
+    # find_dest()
+    # print (dest_x,dest_y)           # tuto chyba
     game_window(a)
 
 # dushan
