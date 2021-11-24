@@ -2,7 +2,6 @@ import pygame
 from enum import Enum
 from pygame.locals import *
 import dfs
-
 pygame.init()
 pygame.font.init()
 WIDTH, HEIGHT = 500, 500
@@ -35,6 +34,8 @@ LVL4 = pygame.image.load('assets/level4.png')
 LVL5 = pygame.image.load('assets/level5.png')
 QUIT = pygame.image.load('assets/quit.png')
 CONGRATS = pygame.image.load('assets/congratulation.png')
+destination=0
+starting_position=0
 
 LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
@@ -42,9 +43,6 @@ MX = 0
 MY = 0
 steps=0
 
-
-
-# https://www.youtube.com/watch?v=bmRFi7-gy5Y&t=446s
 
 class Type(Enum):
     FREE = 0
@@ -216,9 +214,11 @@ def map_in_gui():
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
                 screen.blit(MARIO, (col * MARGIN, row * MARGIN))
-
+                starting_position = dfs.GridPosition(col, row)
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
+                if maps[row][col] == '3':
+                    destination = dfs.GridPosition(col,row)
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
@@ -341,7 +341,8 @@ if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
-    res = dfs(maps, )
+    res = dfs(maps, destination, starting_position)
+    print("Steps with backt = ", res)
     # find_dest()
     # print (dest_x,dest_y)           # tuto chyba
     game_window(a)
