@@ -338,7 +338,7 @@ if __name__ == "__main__":
 
     print(a)
     print('vonku z main')
-    #find_dest(a)
+    find_dest(a)
 
 
     destination, starting_position = find_dest()
