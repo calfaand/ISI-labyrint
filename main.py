@@ -35,16 +35,7 @@ LVL5 = pygame.image.load('assets/level5.png')
 QUIT = pygame.image.load('assets/quit.png')
 CONGRATS = pygame.image.load('assets/congratulation.png')
 
-LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
-LEN_MAP_COL = 0  # sirka vykreslenej mapy
-MX = 0
-MY = 0
 steps=0
-
-
-class Type(Enum):
-    FREE = 0
-    WALL = 1
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -202,6 +193,16 @@ def map(self):
         for line in lines:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
     map_in_gui()
+    
+def only_get_map(self):
+    with open('maps/map' + str(self) + '.txt', 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+    return maps
+
+
+    
 
 
 def map_in_gui():
@@ -230,6 +231,7 @@ def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
 
     screen.fill(WHITE)
     map(self)
+    only_get_map(self)
 
     # map_in_gui()
 
@@ -249,19 +251,7 @@ def game_window(self):
 
             t += 1
 
-def find_dest(self):
-    global destination, starting_position
-    map_in_gui()
-    for row in range(len(maps)):  # ze pocet rows
-        for col in range(len(maps[0])):  # pocet cols
-            if maps[row][col] == '3':
-                destination = dfs.GridPosition(row, col)
-                print('tu')
-            if maps[row][col] == '2':
-                starting_position= dfs.GridPosition(row,col)
-                print('aj tu')
-            break
-    return destination, starting_position
+
 
 
 def main():
@@ -320,29 +310,37 @@ def main():
         elif pressed == -5:
             text_level = screen.blit(QUIT, (WIDTH / 2 - 65, 260))
 
-        text_up = text_format('^', font, 75, WHITE)
-        text_down = text_format('v', font, 75, WHITE)
-
-        # title_rect = title.get_rect()
-        # start_rect = text_level.get_rect()
-        # down_rect = text_up.get_rect()
-        # up_rect = text_down.get_rect()
-
-        # menu text
-        # screen.blit(title, (WIDTH / 2 - (title_rect[2] / 2), 80))  # toto je nazov hry
         screen.blit(SIGN, (WIDTH / 2 - 162.5, 30))
         screen.blit(UP, (WIDTH / 2 - 20, 210))
         screen.blit(DOWN, (WIDTH / 2 - 16, 320))
         pygame.display.update()
 
     # pygame.quit()
+def find_dest(self):
 
+    mapa=only_get_map(self)
+
+    print(mapa)
+    for row in range(len(mapa)):  # ze pocet rows
+        for col in range(len(mapa[0])):  # pocet cols
+            if mapa[row][col] == '3':
+                destination = dfs.GridPosition(row, col)
+                print('destination')
+            if mapa[row][col] == '2':
+                starting_position = dfs.GridPosition(row,col)
+                print("starting_position")
+            break
+    return destination, starting_position
 
 if __name__ == "__main__":
+
     a = main()
+    mapa= map(a)
     print(a)
     print('vonku z main')
-    destination, starting_position = find_dest()
+    # find_dest(a)
+
+    destination, starting_position = find_dest(mapa)
     res = dfs.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
     # find_dest()
