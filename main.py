@@ -347,4 +347,4 @@ if __name__ == "__main__":
     # print (dest_x,dest_y)           # tuto chyba
     game_window(a)
 
-# dushan
+# dushandsa
