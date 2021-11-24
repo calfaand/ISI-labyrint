@@ -193,7 +193,7 @@ def map(self):
         for line in lines:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
     map_in_gui()
-    
+
 def only_get_map(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
@@ -323,7 +323,7 @@ def find_dest(self):
     print(mapa)
     for row in range(len(mapa)):  # ze pocet rows
         for col in range(len(mapa[0])):  # pocet cols
-            if mapa[row][col] == '3':
+            if mapa[row][col] == '#':
                 destination = dfs.GridPosition(row, col)
                 print('destination')
             if mapa[row][col] == '2':
@@ -335,12 +335,13 @@ def find_dest(self):
 if __name__ == "__main__":
 
     a = main()
-    mapa= map(a)
+
     print(a)
     print('vonku z main')
-    # find_dest(a)
+    #find_dest(a)
 
-    destination, starting_position = find_dest(mapa)
+
+    destination, starting_position = find_dest()
     res = dfs.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
     # find_dest()
