@@ -197,8 +197,9 @@ def map(self):
 def only_get_map(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
-        for line in lines:
-            maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+        # for line in lines:
+        #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+    print('koniec map')
     return maps
 
 
@@ -317,20 +318,21 @@ def main():
 
     # pygame.quit()
 def find_dest(self):
+    with open('maps/map' + str(self) + '.txt', 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
 
-    mapa=only_get_map(self)
-
-    print(mapa)
-    for row in range(len(mapa)):  # ze pocet rows
-        for col in range(len(mapa[0])):  # pocet cols
-            if mapa[row][col] == '#':
-                destination = dfs.GridPosition(row, col)
-                print('destination')
-            if mapa[row][col] == '2':
-                starting_position = dfs.GridPosition(row,col)
-                print("starting_position")
-            break
-    return destination, starting_position
+        for row in range(len(maps)):  # ze pocet rows
+            for col in range(len(maps[0])):  # pocet cols
+                if maps[row][col] == '3':
+                    destination = row, col
+                    print(destination)
+                if maps[row][col] == '2':
+                    starting_position = dfs.GridPosition(row,col)
+                    print("starting_position")
+                break
+        # return destination, starting_position
 
 if __name__ == "__main__":
 
@@ -341,9 +343,9 @@ if __name__ == "__main__":
     find_dest(a)
 
 
-    destination, starting_position = find_dest()
-    res = dfs.dfs(maps, destination, starting_position)
-    print("Steps with backt = ", res)
+    # destination, starting_position = find_dest()
+    # res = dfs.dfs(maps, destination, starting_position)
+    # print("Steps with backt = ", res)
     # find_dest()
     # print (dest_x,dest_y)           # tuto chyba
     game_window(a)
