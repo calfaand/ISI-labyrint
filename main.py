@@ -34,8 +34,6 @@ LVL4 = pygame.image.load('assets/level4.png')
 LVL5 = pygame.image.load('assets/level5.png')
 QUIT = pygame.image.load('assets/quit.png')
 CONGRATS = pygame.image.load('assets/congratulation.png')
-destination=0
-starting_position=0
 
 LEN_MAP_ROW = 0  # dlzka vykreslenej mapy         preto zeby som vedel az kam max sa da ist mariom ,moozno nebude ani treba
 LEN_MAP_COL = 0  # sirka vykreslenej mapy
@@ -214,11 +212,10 @@ def map_in_gui():
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
                 screen.blit(MARIO, (col * MARGIN, row * MARGIN))
-                starting_position = dfs.GridPosition(col, row)
+
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
-                if maps[row][col] == '3':
-                    destination = dfs.GridPosition(col,row)
+
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
@@ -252,15 +249,19 @@ def game_window(self):
 
             t += 1
 
-def find_dest():
-    global dest_x, dest_y
-
+def find_dest(self):
+    global destination, starting_position
+    map_in_gui()
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '3':
-                dest_x = row
-                dest_y = col
+                destination = dfs.GridPosition(row, col)
+                print('tu')
+            if maps[row][col] == '2':
+                starting_position= dfs.GridPosition(row,col)
+                print('aj tu')
             break
+    return destination, starting_position
 
 
 def main():
@@ -341,7 +342,8 @@ if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
-    res = dfs(maps, destination, starting_position)
+    destination, starting_position = find_dest()
+    res = dfs.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
     # find_dest()
     # print (dest_x,dest_y)           # tuto chyba
