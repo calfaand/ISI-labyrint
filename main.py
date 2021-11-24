@@ -128,7 +128,7 @@ def mario_moving_in_game(steps):
 
 def move_mario(x, y, direct):
     maps[x][y] = '0'
-    print(x, y)
+    # print(x, y)
 
     if direct == pygame.K_UP:
         x -= 1
@@ -190,8 +190,8 @@ def map(self):
     # print(' som v map')
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
-        for line in lines:
-            maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+        # for line in lines:
+        #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
     map_in_gui()
 
 def only_get_map(self):
@@ -326,13 +326,18 @@ def find_dest(self):
         for row in range(len(maps)):  # ze pocet rows
             for col in range(len(maps[0])):  # pocet cols
                 if maps[row][col] == '3':
-                    destination = row, col
+                    destination = dfs.GridPosition(row, col)
+                    # destination1 = row, col
                     print(destination)
+                    # print(destination1)
+
                 if maps[row][col] == '2':
-                    starting_position = dfs.GridPosition(row,col)
-                    print("starting_position")
-                break
-        # return destination, starting_position
+                    starting_position =dfs.GridPosition(row,col)
+                    # starting_position1 = row,col
+                    print(starting_position)
+                    # print(starting_position1)
+
+        return destination, starting_position
 
 if __name__ == "__main__":
 
@@ -340,12 +345,12 @@ if __name__ == "__main__":
 
     print(a)
     print('vonku z main')
-    find_dest(a)
+    # find_dest(a)
 
 
-    # destination, starting_position = find_dest()
-    # res = dfs.dfs(maps, destination, starting_position)
-    # print("Steps with backt = ", res)
+    destination, starting_position = find_dest(a)
+    res = dfs.dfs(maps, destination, starting_position)
+    print("Steps with backt = ", res)
     # find_dest()
     # print (dest_x,dest_y)           # tuto chyba
     game_window(a)

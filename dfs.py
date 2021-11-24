@@ -1,5 +1,5 @@
 from collections import deque
-from main import maps
+import main
 
 
 class GridPosition:
@@ -22,9 +22,9 @@ def create_node(x, y, c):
 def dfs(Grid, dest: GridPosition, start: GridPosition):
     adj_cell_x = [1, 0, 0, -1]
     adj_cell_y = [0, 1, -1, 0]
-    row, col = (len(maps), len(maps[0]))
-    visited_blocks = [[False for i in range(row)]  # nastavi vsetko na nenavstivene
-                      for j in range(col)]
+    row, col = (len(Grid), len(Grid[0]))
+    visited_blocks = [[False for i in range(col)]  # nastavi vsetko na nenavstivene
+                      for j in range(row)]
     visited_blocks[start.x][start.y] = True
     stack = deque()
     sol = Node(start, 0)
@@ -53,8 +53,8 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
             else:
                 x_pos = curr_pos.x + adj_cell_x[i]
                 y_pos = curr_pos.y + adj_cell_y[i]
-                if x_pos != len(maps) and x_pos !=-1 and y_pos != len(maps[0]) and y_pos != -1:
-                    if Grid[x_pos][y_pos]==1:       #TODO: mozno treba dat tu 0 ..... 1 v GH ako volno, tuto 1 ako stena
+                if x_pos != len(Grid) and x_pos !=-1 and y_pos != len(Grid[0]) and y_pos != -1:
+                    if Grid[x_pos][y_pos]==0:       #TODO: mozno treba dat tu 0 ..... 1 v GH ako volno, tuto 1 ako stena
                         if not visited_blocks[x_pos][y_pos]:
                             cost+=1
                             visited_blocks[x_pos][y_pos] = True
