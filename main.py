@@ -369,8 +369,12 @@ if __name__ == "__main__":
     destination, starting_position = find_dest(a)
     res = algos.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
-    # find_dest()
-    # print (dest_x,dest_y)           # tuto chyba
+    print()
+    print()
+
+    res1 = algos.bfs(maps, destination, starting_position)
+    print('Steps with backt1= ', res1)
+
     game_window(a)
 
 # dushandsa
