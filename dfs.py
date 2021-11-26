@@ -53,7 +53,7 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                 x_pos = curr_pos.x + adj_cell_x[i]
                 y_pos = curr_pos.y + adj_cell_y[i]
                 if x_pos != len(Grid) and x_pos !=-1 and y_pos != len(Grid[0]) and y_pos != -1:
-                    if Grid[x_pos][y_pos]=='0':       #TODO: mozno treba dat tu 0 ..... 1 v GH ako volno, tuto 1 ako stena
+                    if Grid[x_pos][y_pos]=='0' or Grid[x_pos][y_pos]=='3' :
                         if not visited_blocks[x_pos][y_pos]:
                             cost+=1
                             visited_blocks[x_pos][y_pos] = True
