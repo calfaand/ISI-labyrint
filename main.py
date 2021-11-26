@@ -53,7 +53,7 @@ def text_format(message, textFont, textSize, textColor):
     return newText
 
 
-def move_down(x, y, steps, dir):
+def move_down(x, y, steps):
     # if dir == pygame.K_DOWN:
     if maps[x + 1][y] == '0' or maps[x + 1][y] == '3' or maps[x + 1][y] == '5':
         if maps[x + 1][y] == '3':
@@ -64,7 +64,7 @@ def move_down(x, y, steps, dir):
     mario_moving_in_game(steps)
 
 
-def move_up(x, y, steps, dir):
+def move_up(x, y, steps):
     if maps[x - 1][y] == '0' or maps[x - 1][y] == '3' or maps[x - 1][y] == '5':
         if maps[x - 1][y] == '3':
             x, y = move_mario(x, y, pygame.K_UP)
@@ -74,7 +74,7 @@ def move_up(x, y, steps, dir):
     mario_moving_in_game(steps)
 
 
-def move_left(x, y, steps, dir):
+def move_left(x, y, steps):
     if maps[x][y - 1] == '0' or maps[x][y - 1] == '3' or maps[x][y - 1] == '5':
         if maps[x][y - 1] == '3':
             x, y = move_mario(x, y, pygame.K_LEFT)
@@ -84,7 +84,7 @@ def move_left(x, y, steps, dir):
     mario_moving_in_game(steps)
 
 
-def move_right(x, y, steps, dir):
+def move_right(x, y, steps):
     if maps[x][y + 1] == '0' or maps[x][y + 1] == '3' or maps[x][y + 1] == '5':
 
         if maps[x][y + 1] == '3':
@@ -116,17 +116,17 @@ def mario_moving_in_game(steps):
             if event.type == pygame.KEYDOWN:
                 steps += 1
                 if event.key == pygame.K_DOWN:
-                    move_down(mario_is_on_x, mario_is_on_y, steps, pygame.K_DOWN)
+                    move_down(mario_is_on_x, mario_is_on_y, steps)
 
                 if event.key == pygame.K_UP:
-                    move_up(mario_is_on_x, mario_is_on_y, steps, pygame.K_UP)
+                    move_up(mario_is_on_x, mario_is_on_y, steps)
 
                 if event.key == pygame.K_LEFT:
-                    move_left(mario_is_on_x, mario_is_on_y, steps, pygame.K_LEFT)
+                    move_left(mario_is_on_x, mario_is_on_y, steps)
 
                 if event.key == pygame.K_RIGHT:
                     print('som tu')
-                    move_right(mario_is_on_x, mario_is_on_y, steps, pygame.K_RIGHT)
+                    move_right(mario_is_on_x, mario_is_on_y, steps)
 
         new_map()
         pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
@@ -351,11 +351,11 @@ if __name__ == "__main__":
     destination, starting_position = find_dest(a)
     res = algos.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
-    print()
-    print()
-
-    res1 = algos.bfs(maps, destination, starting_position)
-    print('Steps with backt1= ', res1)
+    # print()
+    # print()
+    #
+    # res1 = algos.bfs(maps, destination, starting_position)
+    # print('Steps with backt1= ', res1)
 
     game_window(a)
 
