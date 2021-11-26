@@ -57,6 +57,7 @@ def move_down(x,y,steps, dir):
             x, y = move_mario(x, y, pygame.K_DOWN)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_DOWN)
+        print(can_down(x, y))
     mario_moving_in_game(steps)
     
 def move_up(x,y,steps,dir):
@@ -65,6 +66,7 @@ def move_up(x,y,steps,dir):
             x, y = move_mario(x, y, pygame.K_UP)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_UP)
+        print(can_up(x,y))
     mario_moving_in_game(steps)
 
 def move_left(x,y,steps, dir):
@@ -73,6 +75,7 @@ def move_left(x,y,steps, dir):
             x, y = move_mario(x, y, pygame.K_LEFT)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_LEFT)
+        print(can_left(x,y))
     mario_moving_in_game(steps)
 
 
@@ -82,7 +85,26 @@ def move_right(x,y,steps,dir):
             x, y = move_mario(x, y, pygame.K_RIGHT)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_RIGHT)
+        print(can_right(x,y))
     mario_moving_in_game(steps)
+
+def can_down(x,y):
+    if maps[x + 1][y] == '0' or maps[x + 1][y] == '3':
+        return True
+    return False
+
+def can_up(x,y):
+    if maps[x - 1][y] == '0' or maps[x + 1][y] == '3':
+        return True
+    return False
+def can_left(x,y):
+    if maps[x][y-1] == '0' or maps[x + 1][y] == '3':
+        return True
+    return False
+def can_right(x,y):
+    if maps[x][y+1] == '0' or maps[x + 1][y] == '3':
+        return True
+    return False
 
 
 
@@ -328,25 +350,21 @@ def find_dest(self):
                 if maps[row][col] == '3':
                     destination = dfs.GridPosition(row, col)
                     # destination1 = row, col
-                    print(destination)
-                    # print(destination1)
+                    #print(destination)
+
 
                 if maps[row][col] == '2':
                     starting_position =dfs.GridPosition(row,col)
                     # starting_position1 = row,col
-                    print(starting_position)
-                    # print(starting_position1)
+                    #print(starting_position)
 
         return destination, starting_position
 
 if __name__ == "__main__":
 
     a = main()
-
     print(a)
     print('vonku z main')
-    # find_dest(a)
-
 
     destination, starting_position = find_dest(a)
     res = dfs.dfs(maps, destination, starting_position)
