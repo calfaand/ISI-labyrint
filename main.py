@@ -348,13 +348,13 @@ def find_dest(self):
         for row in range(len(maps)):  # ze pocet rows
             for col in range(len(maps[0])):  # pocet cols
                 if maps[row][col] == '3':
-                    destination = dfs.GridPosition(row, col)
+                    destination = algos.GridPosition(row, col)
                     # destination1 = row, col
                     #print(destination)
 
 
                 if maps[row][col] == '2':
-                    starting_position =dfs.GridPosition(row,col)
+                    starting_position =algos.GridPosition(row,col)
                     # starting_position1 = row,col
                     #print(starting_position)
 
@@ -367,7 +367,7 @@ if __name__ == "__main__":
     print('vonku z main')
 
     destination, starting_position = find_dest(a)
-    res = dfs.dfs(maps, destination, starting_position)
+    res = algos.dfs(maps, destination, starting_position)
     print("Steps with backt = ", res)
     # find_dest()
     # print (dest_x,dest_y)           # tuto chyba
