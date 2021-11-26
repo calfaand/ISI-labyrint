@@ -349,13 +349,13 @@ if __name__ == "__main__":
     print('vonku z main')
 
     destination, starting_position = find_dest(a)
-    res = algos.dfs(maps, destination, starting_position)
-    print("Steps with backt = ", res)
+    # res = algos.dfs(maps, destination, starting_position)
+    # print("Steps with backt = ", res)
     # print()
     # print()
     #
-    # res1 = algos.bfs(maps, destination, starting_position)
-    # print('Steps with backt1= ', res1)
+    res1 = algos.bfs(maps, destination, starting_position)
+    print('Steps with backt1= ', res1)
 
     game_window(a)
 
