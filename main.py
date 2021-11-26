@@ -2,6 +2,7 @@ import pygame
 from enum import Enum
 from pygame.locals import *
 import algos
+
 pygame.init()
 pygame.font.init()
 WIDTH, HEIGHT = 500, 500
@@ -33,9 +34,10 @@ LVL3 = pygame.image.load('assets/level3.png')
 LVL4 = pygame.image.load('assets/level4.png')
 LVL5 = pygame.image.load('assets/level5.png')
 QUIT = pygame.image.load('assets/quit.png')
+X = pygame.image.load('assets/x.png')
 CONGRATS = pygame.image.load('assets/congratulation.png')
 
-steps=0
+steps = 0
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -50,69 +52,50 @@ def text_format(message, textFont, textSize, textColor):
     newText = newFont.render(message, 0, textColor)
     return newText
 
-def move_down(x,y,steps, dir):
+
+def move_down(x, y, steps, dir):
     # if dir == pygame.K_DOWN:
-    if maps[x + 1][y] == '0' or maps[x + 1][y] == '3':
+    if maps[x + 1][y] == '0' or maps[x + 1][y] == '3' or maps[x + 1][y] == '5':
         if maps[x + 1][y] == '3':
             x, y = move_mario(x, y, pygame.K_DOWN)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_DOWN)
-        print(can_down(x, y))
+
     mario_moving_in_game(steps)
-    
-def move_up(x,y,steps,dir):
-    if maps[x - 1][y] == '0' or maps[x - 1][y] == '3':
+
+
+def move_up(x, y, steps, dir):
+    if maps[x - 1][y] == '0' or maps[x - 1][y] == '3' or maps[x - 1][y] == '5':
         if maps[x - 1][y] == '3':
             x, y = move_mario(x, y, pygame.K_UP)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_UP)
-        print(can_up(x,y))
+
     mario_moving_in_game(steps)
 
-def move_left(x,y,steps, dir):
-    if maps[x][y - 1] == '0' or maps[x][y- 1] == '3':
+
+def move_left(x, y, steps, dir):
+    if maps[x][y - 1] == '0' or maps[x][y - 1] == '3' or maps[x][y - 1] == '5':
         if maps[x][y - 1] == '3':
             x, y = move_mario(x, y, pygame.K_LEFT)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_LEFT)
-        print(can_left(x,y))
+
     mario_moving_in_game(steps)
 
 
-def move_right(x,y,steps,dir):
-    if maps[x][y + 1] == '0' or maps[x][y+ 1] == '3':
+def move_right(x, y, steps, dir):
+    if maps[x][y + 1] == '0' or maps[x][y + 1] == '3' or maps[x][y + 1] == '5':
+
         if maps[x][y + 1] == '3':
             x, y = move_mario(x, y, pygame.K_RIGHT)
             win_game(steps)
         x, y = move_mario(x, y, pygame.K_RIGHT)
-        print(can_right(x,y))
+
     mario_moving_in_game(steps)
-
-def can_down(x,y):
-    if maps[x + 1][y] == '0' or maps[x + 1][y] == '3':
-        return True
-    return False
-
-def can_up(x,y):
-    if maps[x - 1][y] == '0' or maps[x + 1][y] == '3':
-        return True
-    return False
-def can_left(x,y):
-    if maps[x][y-1] == '0' or maps[x + 1][y] == '3':
-        return True
-    return False
-def can_right(x,y):
-    if maps[x][y+1] == '0' or maps[x + 1][y] == '3':
-        return True
-    return False
-
-
-
 
 
 def mario_moving_in_game(steps):
-
-
     # steps = 0
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -120,7 +103,7 @@ def mario_moving_in_game(steps):
                 mario_is_on_x = row
                 mario_is_on_y = col
                 break
-    #print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
+    # print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
     run = True
     while run:
 
@@ -131,7 +114,7 @@ def mario_moving_in_game(steps):
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                steps+=1
+                steps += 1
                 if event.key == pygame.K_DOWN:
                     move_down(mario_is_on_x, mario_is_on_y, steps, pygame.K_DOWN)
 
@@ -142,14 +125,16 @@ def mario_moving_in_game(steps):
                     move_left(mario_is_on_x, mario_is_on_y, steps, pygame.K_LEFT)
 
                 if event.key == pygame.K_RIGHT:
+                    print('som tu')
                     move_right(mario_is_on_x, mario_is_on_y, steps, pygame.K_RIGHT)
 
         new_map()
-        pygame.display.update()     #ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
+        pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
 
 def move_mario(x, y, direct):
-    maps[x][y] = '0'
+    maps[x][y] = '5'
+
     # print(x, y)
 
     if direct == pygame.K_UP:
@@ -161,14 +146,14 @@ def move_mario(x, y, direct):
     elif direct == pygame.K_RIGHT:
         y += 1
     else:
-        print("Fuck this shit")
+        print("oh nou")
 
     maps[x][y] = '2'
     # print(x, y)
-    return x,y
+    return x, y
+
 
 def win_game(steps):
-
     screen.fill(WHITE)
     run = True
     pressed = 0
@@ -180,33 +165,34 @@ def win_game(steps):
         win_text = text_format("CONGRATULATION", font, 70, WHITE)
         win_rect = win_text.get_rect()
         steps_text2 = text_format(str(steps) + ' steps', font, 70, BROWN)
-        steps_text= text_format(str(steps) + ' steps', font, 70, BROWNLIGHT)
+        steps_text = text_format(str(steps) + ' steps', font, 70, BROWNLIGHT)
         steps_rect = steps_text.get_rect()
         # screen.blit(win_text, (WIDTH / 2 - (win_rect[2] / 2), 80))
         screen.blit(CONGRATS, (WIDTH / 2 - 216, 30))
         screen.blit(steps_text, (WIDTH / 2 - (steps_rect[2] / 2), 160))
-        screen.blit(steps_text2, ((WIDTH / 2 - (steps_rect[2] / 2)-4), 155))
+        screen.blit(steps_text2, ((WIDTH / 2 - (steps_rect[2] / 2) - 4), 155))
         pygame.display.flip()
         pygame.time.delay(7000)
         quit()
 
 
 def new_map():
-
     screen.fill(WHITE)
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
                 screen.blit(MARIO, (col * MARGIN, row * MARGIN))
-
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
+                continue
+            if maps[row][col] == '5':
+                screen.blit(X, (col * MARGIN, row * MARGIN))
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
 
-
     pygame.display.flip()
+
 
 def map(self):
     # print(' som v map')
@@ -216,6 +202,7 @@ def map(self):
         #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
     map_in_gui()
 
+
 def only_get_map(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
@@ -223,9 +210,6 @@ def only_get_map(self):
         #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
     print('koniec map')
     return maps
-
-
-    
 
 
 def map_in_gui():
@@ -239,7 +223,6 @@ def map_in_gui():
 
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
-
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
@@ -250,7 +233,7 @@ def map_in_gui():
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
     # pygame.display.update()
-    #print('draw_window')
+    # print('draw_window')
 
     screen.fill(WHITE)
     map(self)
@@ -273,8 +256,6 @@ def game_window(self):
             print(maps)
 
             t += 1
-
-
 
 
 def main():
@@ -339,6 +320,8 @@ def main():
         pygame.display.update()
 
     # pygame.quit()
+
+
 def find_dest(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = f.readlines()
@@ -350,18 +333,17 @@ def find_dest(self):
                 if maps[row][col] == '3':
                     destination = algos.GridPosition(row, col)
                     # destination1 = row, col
-                    #print(destination)
-
+                    # print(destination)
 
                 if maps[row][col] == '2':
-                    starting_position =algos.GridPosition(row,col)
+                    starting_position = algos.GridPosition(row, col)
                     # starting_position1 = row,col
-                    #print(starting_position)
+                    # print(starting_position)
 
         return destination, starting_position
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
