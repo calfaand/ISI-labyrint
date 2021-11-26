@@ -1,7 +1,7 @@
 import pygame
 from enum import Enum
 from pygame.locals import *
-import dfs
+import algos
 pygame.init()
 pygame.font.init()
 WIDTH, HEIGHT = 500, 500

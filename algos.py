@@ -1,6 +1,7 @@
 from collections import deque
 import main
 
+
 class GridPosition:
     def __init__(self, x, y):
         self.x = x
@@ -52,10 +53,27 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
             else:
                 x_pos = curr_pos.x + adj_cell_x[i]
                 y_pos = curr_pos.y + adj_cell_y[i]
-                if x_pos != len(Grid) and x_pos !=-1 and y_pos != len(Grid[0]) and y_pos != -1:
-                    if Grid[x_pos][y_pos]=='0' or Grid[x_pos][y_pos]=='3' :
+                if x_pos != len(Grid) and x_pos != -1 and y_pos != len(Grid[0]) and y_pos != -1:
+                    if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
                         if not visited_blocks[x_pos][y_pos]:
-                            cost+=1
+                            cost += 1
                             visited_blocks[x_pos][y_pos] = True
-                            stack.append(create_node(x_pos,y_pos, curr_block.cost ))
+                            stack.append(create_node(x_pos, y_pos, curr_block.cost))
     return -1
+
+
+def bfs(Grid, dest: GridPosition, start: GridPosition):
+    adj_cell_x = [1, 0, 0, -1]  # sused po x
+    adj_cell_y = [0, 1, -1, 0]  # sused po y
+    row, col = (len(Grid), len(Grid[0]))
+    visited_blocks = [[False for i in range(col)]  # nastavi vsetko na nenavstivene
+                      for j in range(row)]
+    visited_blocks[start.x][start.y] = True
+    queue = deque()
+    sol = Node(start, 0)
+    queue.append(sol)
+    cells = 4  # jak neig v dfs
+    cost = 0
+    while queue:
+        curr_block = queue.popleft() #deq front cell
+        curr_pos = curr_block.pos
