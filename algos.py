@@ -174,6 +174,7 @@ def heuristic_value(curr_node,dest):
     return abs(curr_node.x - dest.x) + abs(curr_node.y - dest.y)
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
+    cc=-1
     screen.fill(WHITE)
     pygame.display.flip()
     for row in range(len(Grid)):  # ze pocet rows
@@ -183,6 +184,7 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
                 continue
             if Grid[row][col] == '0' or Grid[row][col] == '3':
+                cc+=1
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
@@ -232,23 +234,32 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
                 x_pos = current_pos.x + adj_cell_x[i]
                 y_pos = current_pos.y + adj_cell_y[i]
                 post = GridPosition(x_pos, y_pos)
-            if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
+            if len(Grid) > x_pos >= 0 and len(Grid[0]) > y_pos >= 0:
                 if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
                     if not visited_blocks[x_pos][y_pos]:
                         h = heuristic_value(post, dest)         #getting heuristic value of the neighbours
                         next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         visited_blocks[x_pos][y_pos] = True
+
                         screen.blit(X, (y_pos * MARGIN, x_pos * MARGIN))
-                        pygame.time.delay(200)
+                        pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
                         print('cost ' ,cost)
                         q.put((h, next_cell))
+                        if  cc==cost:
+                            return -1
+
+
+
+
     return -1
 
 
 
 def A_Star(Grid, dest: GridPosition, start: GridPosition):
+    cc=-1
+
     screen.fill(WHITE)
     pygame.display.flip()
     for row in range(len(Grid)):  # ze pocet rows
@@ -258,6 +269,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
                 continue
             if Grid[row][col] == '0' or Grid[row][col] == '3':
+                cc+=1
                 continue
 
             screen.blit(WALL, (col * MARGIN, row * MARGIN))
@@ -302,8 +314,9 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
     # Check if we have reached the goal, return the path (From Current Node to Start Node By Node.parent)
         if current_pos.x == dest.x and current_pos.y == dest.y:
-            print("Algorithm used = A* Algorithm")
-            print("No. of moves utilized = ", cost)
+            print("Algorithm used = A STAR")
+            print("Path found!!")
+            print("Total nodes visited = ", cost)
             return current_node.cost
 
         x_pos = current_pos.x
@@ -314,15 +327,15 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
             if x_pos == len(Grid) - 1 and adj_cell_x[i] == 1:
                 x_pos = current_pos.x
                 y_pos = current_pos.y + adj_cell_y[i]
-                post = GridPosition(x_pos, y_pos)
+
             if y_pos == 0 and adj_cell_y[i] == -1:
                 x_pos = current_pos.x + adj_cell_x[i]
                 y_pos = current_pos.y
-                post = GridPosition(x_pos, y_pos)
+
             else:
                 x_pos = current_pos.x + adj_cell_x[i]
                 y_pos = current_pos.y + adj_cell_y[i]
-                post = GridPosition(x_pos, y_pos)
+
             if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
                 if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
                     if not closed[x_pos][y_pos]:
@@ -336,7 +349,9 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
 
-
                         open1.put((f, neighbor))
+                        if cc == cost:
+                            return -1
+
 
     return -1

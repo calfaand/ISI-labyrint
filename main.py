@@ -356,7 +356,7 @@ if __name__ == "__main__":
     #
     # res1 = algos.bfs(maps, destination, starting_position)
     # print('Steps with backt1= ', res1)
-
+    #
     # res2 = algos.greedybfs(maps, destination, starting_position)
     # print("Steps with backt = ", res2)
     res3 = algos.A_Star(maps, destination, starting_position)
