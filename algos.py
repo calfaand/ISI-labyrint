@@ -1,4 +1,5 @@
 from collections import deque
+import queue
 import main
 import pygame
 
@@ -159,4 +160,81 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
                         pygame.display.update()
 
                         queue.append(next_cell)
+    return -1
+
+def heuristic_value(curr_node,dest):
+    return (abs(curr_node.x-dest.x)+abs(curr_node.y-dest.y))
+
+def greedybfs(Grid, dest: GridPosition, start: GridPosition):
+    screen.fill(WHITE)
+    pygame.display.flip()
+    for row in range(len(Grid)):  # ze pocet rows
+        for col in range(len(Grid[0])):  # pocet cols
+            if Grid[row][col] == '2':
+                screen.blit(MARIO, (col * MARGIN, row * MARGIN))
+
+                continue
+            if Grid[row][col] == '0' or Grid[row][col] == '3':
+                continue
+
+            screen.blit(WALL, (col * MARGIN, row * MARGIN))
+
+    pygame.display.flip()
+
+
+    adj_cell_x = [-1, 0, 0, 1]
+    adj_cell_y = [0, -1, 1, 0]
+    m, n = (len(Grid), len(Grid[0]))
+    visited_blocks = [[False for i in range(m)]
+                      for j in range(n)]
+    visited_blocks[start.x][start.y] = True
+    q = queue.PriorityQueue()
+    sol = Node(start, 0)
+    q.put((0, sol))
+    cells = 4
+    cost = 0
+    while q:
+        current = q.get()  # Dequeue the front cell
+        current_block = current[1]
+        current_pos = current_block.pos
+
+        # if goal found than return cost
+        if current_pos.x == dest.x and current_pos.y == dest.y:
+            print("Algorithm used = GBFS")
+            print("No. of moves utilized = ", cost)
+            return current_block.cost
+
+        # if current block not in visited than add in visited
+        if current_block not in visited_blocks:
+            visited_blocks[current_pos.x][current_pos.y] = True
+            cost = cost + 1
+
+        x_pos = current_pos.x
+        y_pos = current_pos.y
+
+        for i in range(cells):
+            if x_pos == len(Grid) - 1 and adj_cell_x[i] == 1:
+                x_pos = current_pos.x
+                y_pos = current_pos.y + adj_cell_y[i]
+                post = GridPosition(x_pos, y_pos)
+            if y_pos == 0 and adj_cell_y[i] == -1:
+                x_pos = current_pos.x + adj_cell_x[i]
+                y_pos = current_pos.y
+                post = GridPosition(x_pos, y_pos)
+            else:
+                x_pos = current_pos.x + adj_cell_x[i]
+                y_pos = current_pos.y + adj_cell_y[i]
+                post = GridPosition(x_pos, y_pos)
+            if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
+                if Grid[x_pos][y_pos] == 1:
+                    if not visited_blocks[x_pos][y_pos]:
+                        h = heuristic_value(post, dest)  # getting heuristic value of the neighbours
+                        next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
+                        visited_blocks[x_pos][y_pos] = True
+                        screen.blit(X, (y_pos * MARGIN, x_pos * MARGIN))
+                        pygame.time.delay(200)
+                        print(x_pos, ' ', y_pos)
+                        pygame.display.update()
+                        q.put((h, next_cell))
+
     return -1
