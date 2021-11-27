@@ -27,6 +27,13 @@ class Node:
         self.pos = pos
         self.cost = cost
 
+    def __lt__(self, other):
+        if self.cost < other.cost:
+            return True
+        else:
+            return False
+
+
 
 def create_node(x, y, c):
     val = GridPosition(x, y)
@@ -156,14 +163,15 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
                         visited_blocks[x_pos][y_pos] = True
                         screen.blit(X, (y_pos * MARGIN, x_pos * MARGIN))
                         pygame.time.delay(200)
-                        print(x_pos, ' ', y_pos)
+                        # print(x_pos, ' ', y_pos)
+                        print(cost)
                         pygame.display.update()
 
                         queue.append(next_cell)
     return -1
 
 def heuristic_value(curr_node,dest):
-    return (abs(curr_node.x-dest.x)+abs(curr_node.y-dest.y))
+    return abs(curr_node.x - dest.x) + abs(curr_node.y - dest.y)
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
     screen.fill(WHITE)
@@ -181,12 +189,11 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
     pygame.display.flip()
 
-
     adj_cell_x = [-1, 0, 0, 1]
     adj_cell_y = [0, -1, 1, 0]
-    m, n = (len(Grid), len(Grid[0]))
+    m, n = (len(Grid), len(Grid))
     visited_blocks = [[False for i in range(m)]
-                      for j in range(n)]
+                for j in range(n)]
     visited_blocks[start.x][start.y] = True
     q = queue.PriorityQueue()
     sol = Node(start, 0)
@@ -198,17 +205,17 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
         current_block = current[1]
         current_pos = current_block.pos
 
-        # if goal found than return cost
+       #if goal found than return cost
         if current_pos.x == dest.x and current_pos.y == dest.y:
             print("Algorithm used = GBFS")
-            print("No. of moves utilized = ", cost)
+            print("Path found!!")
+            print("Total nodes visited = ", cost)
             return current_block.cost
 
-        # if current block not in visited than add in visited
+        #if current block not in visited than add in visited
         if current_block not in visited_blocks:
             visited_blocks[current_pos.x][current_pos.y] = True
-            cost = cost + 1
-
+            cost+= 1
         x_pos = current_pos.x
         y_pos = current_pos.y
 
@@ -226,15 +233,16 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
                 y_pos = current_pos.y + adj_cell_y[i]
                 post = GridPosition(x_pos, y_pos)
             if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
-                if Grid[x_pos][y_pos] == 1:
+                if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
                     if not visited_blocks[x_pos][y_pos]:
-                        h = heuristic_value(post, dest)  # getting heuristic value of the neighbours
+                        h = heuristic_value(post, dest)         #getting heuristic value of the neighbours
                         next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         visited_blocks[x_pos][y_pos] = True
                         screen.blit(X, (y_pos * MARGIN, x_pos * MARGIN))
                         pygame.time.delay(200)
-                        print(x_pos, ' ', y_pos)
+                        # print(x_pos, ' ', y_pos)
                         pygame.display.update()
+                        print('cost ' ,cost)
                         q.put((h, next_cell))
 
     return -1
