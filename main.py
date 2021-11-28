@@ -181,15 +181,15 @@ def new_map():
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN, row * MARGIN))
+                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
                 continue
             if maps[row][col] == '5':
-                screen.blit(X, (col * MARGIN, row * MARGIN))
+                screen.blit(X, (col * MARGIN+70, row * MARGIN))
                 continue
 
-            screen.blit(WALL, (col * MARGIN, row * MARGIN))
+            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
 
     pygame.display.flip()
 
@@ -361,9 +361,6 @@ if __name__ == "__main__":
     # print("Steps with backt = ", res2)
     res3 = algos.A_Star(maps, destination, starting_position)
     print("Steps with backt = ", res3)
-
-
-
     game_window(a)
 
 # dushandsa
