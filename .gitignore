@@ -368,3 +368,5 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/python,pydev,pycharm,pycharm+all,pycharm+iml
 .idea/misc.xml
 .idea/ISI-labyrint.iml
+.idea/misc.xml
+.idea/ISI-labyrint.iml
