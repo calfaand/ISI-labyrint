@@ -94,7 +94,7 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                             cost += 1
                             visited_blocks[x_pos][y_pos] = True
                             screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
-                            pygame.time.delay(200)
+                            pygame.time.delay(100)
                             print(x_pos, ' ', y_pos)
                             pygame.display.update()
                             stack.append(create_node(x_pos, y_pos, curr_block.cost))
@@ -162,7 +162,7 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
 
                         visited_blocks[x_pos][y_pos] = True
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
-                        pygame.time.delay(200)
+                        pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         print(cost)
                         pygame.display.update()
@@ -345,7 +345,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                         closed[x_pos][y_pos] = True     #adding neighbour to closed
 
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
-                        pygame.time.delay(200)
+                        pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
 
