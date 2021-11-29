@@ -208,24 +208,24 @@ def new_map():
                 destination, starting_position = find_dest(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
-
+                return main()
             if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
                 destination, starting_position = find_dest(a)
                 res1 = algos.bfs(maps, destination, starting_position)
                 print("Steps with backt = ", res1)
-
+                return main()
 
             if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest(a)
                 res2 = algos.greedybfs(maps, destination, starting_position)
                 print("Steps with backt = ", res2)
-
+                return main()
 
             if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
                 destination, starting_position = find_dest(a)
                 res3 = algos.A_Star(maps, destination, starting_position)
                 print("Steps with backt = ", res3)
-
+                return main()
 
 
 
@@ -242,12 +242,12 @@ def map(self):
 
 
 def only_get_map(self):
-    with open('maps/map' + str(self) + '.txt', 'r') as f:
-        lines = f.readlines()
-        # for line in lines:
-        #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
-    print('koniec map')
-    return maps
+    # with open('maps/map' + str(self) + '.txt', 'r') as f:
+    #     lines = f.readlines()
+    #     # for line in lines:
+    #     #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+    # print('koniec map')
+    return
 
 
 def map_in_gui():           # tuto sa vykresli mapa
@@ -364,7 +364,6 @@ def main():
         screen.blit(UP, (WIDTH / 2 - 20, 210))
         screen.blit(DOWN, (WIDTH / 2 - 16, 320))
         pygame.display.update()
-
     # pygame.quit()
 
 

@@ -281,7 +281,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
     open1 = queue.PriorityQueue()
     closed = [[False for i in range(len(Grid))]
                       for j in range(len(Grid[0]))]
-    closed[start.x][start.y] = True
+    closed[start.x-15][start.y-15] = True
 
     #using these cell arrays to get neighbours
     adj_cell_x = [-1, 0, 0, 1]
@@ -309,7 +309,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
     # Add the current node to the closed list
         if current_node not in closed:
-            closed[current_pos.x][current_pos.y] = True
+            closed[current_pos.x-15][current_pos.y-15] = True
             cost = cost + 1
 
     # Check if we have reached the goal, return the path (From Current Node to Start Node By Node.parent)
@@ -338,11 +338,11 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
             if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
                 if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
-                    if not closed[x_pos][y_pos]:
+                    if not closed[x_pos-15][y_pos-15]:
                         neighbor = Node(GridPosition(x_pos, y_pos), current_node.cost + 1)
                         h = heuristic_value(neighbor.pos, dest)      #get heuristic value of neighbours
                         f = h + neighbor.cost           #getting f by f = h + g
-                        closed[x_pos][y_pos] = True     #adding neighbour to closed
+                        closed[x_pos-15][y_pos-15] = True     #adding neighbour to closed
 
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
                         pygame.time.delay(100)
