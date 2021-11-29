@@ -2,6 +2,8 @@ import pygame
 from enum import Enum
 from pygame.locals import *
 import algos
+import sys
+
 
 pygame.init()
 pygame.font.init()
@@ -193,12 +195,21 @@ def new_map():
                 screen.blit(X, (col * MARGIN+70, row * MARGIN))
                 continue
             screen.blit(WALL, (col * MARGIN + 70, row * MARGIN))
+    screen.blit(DFS_BTN, (WIDTH/5, HEIGHT/2+120))
+    screen.blit(BFS_BTN, (WIDTH/5, HEIGHT-80))
+    screen.blit(GR_BTN, (WIDTH/2, HEIGHT/2+120))
+    screen.blit(ASTAR_BTN, (WIDTH/2, HEIGHT-80))
 
+    mouse = pygame.mouse.get_pos()
 
-    screen.blit(DFS_BTN, (100, 370))
-    screen.blit(BFS_BTN, (100,420))
-    screen.blit(GR_BTN, (250, 370))
-    screen.blit(ASTAR_BTN, (250, 420))
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if WIDTH/5<=mouse[0] <= WIDTH/5+100 and HEIGHT/2+120 <= mouse[1] <= HEIGHT/2+163:
+                destination, starting_position = find_dest(a)
+                res = algos.dfs(maps, destination, starting_position)
+                print("Steps with backt = ", res)
+                pygame.quit()
+
 
 
 
@@ -237,7 +248,6 @@ def map_in_gui():           # tuto sa vykresli mapa
                 continue
 
             screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
 
 
     pygame.display.flip()
@@ -363,9 +373,11 @@ def find_dest(self):
 
 
 if __name__ == "__main__":
+    global a
     a = main()
     print(a)
     print('vonku z main')
+    new_map()
 
     destination, starting_position = find_dest(a)
     # res = algos.dfs(maps, destination, starting_position)
