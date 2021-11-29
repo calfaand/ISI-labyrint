@@ -4,7 +4,6 @@ from pygame.locals import *
 import algos
 import sys
 
-
 pygame.init()
 pygame.font.init()
 WIDTH, HEIGHT = 500, 500
@@ -44,6 +43,8 @@ GR_BTN = pygame.image.load('assets/greedy.png')
 ASTAR_BTN = pygame.image.load('assets/a.png')
 
 steps = 0
+lalala=0
+
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -186,30 +187,30 @@ def new_map():
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+                screen.blit(MARIO, (col * MARGIN + 70, row * MARGIN))
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
                 continue
             if maps[row][col] == '5':
-                screen.blit(X, (col * MARGIN+70, row * MARGIN))
+                screen.blit(X, (col * MARGIN + 70, row * MARGIN))
                 continue
             screen.blit(WALL, (col * MARGIN + 70, row * MARGIN))
 
-    screen.blit(DFS_BTN, (WIDTH/5, HEIGHT/2+120))
-    screen.blit(BFS_BTN, (WIDTH/5, HEIGHT-80))
-    screen.blit(GR_BTN, (WIDTH/2, HEIGHT/2+120))
-    screen.blit(ASTAR_BTN, (WIDTH/2, HEIGHT-80))
+    screen.blit(DFS_BTN, (WIDTH / 5, HEIGHT / 2 + 120))
+    screen.blit(BFS_BTN, (WIDTH / 5, HEIGHT - 80))
+    screen.blit(GR_BTN, (WIDTH / 2, HEIGHT / 2 + 120))
+    screen.blit(ASTAR_BTN, (WIDTH / 2, HEIGHT - 80))
 
     mouse = pygame.mouse.get_pos()
 
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if WIDTH/5<=mouse[0] <= WIDTH/5+100 and HEIGHT/2+120 <= mouse[1] <= HEIGHT/2+163:
+            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
                 return main()
-            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
+            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest(a)
                 res1 = algos.bfs(maps, destination, starting_position)
                 print("Steps with backt = ", res1)
@@ -220,25 +221,25 @@ def new_map():
                 res2 = algos.greedybfs(maps, destination, starting_position)
                 print("Steps with backt = ", res2)
                 return main()
-
-            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
+            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest(a)
                 res3 = algos.A_Star(maps, destination, starting_position)
                 print("Steps with backt = ", res3)
                 return main()
-
-
-
-    pygame.display.flip()
+    # pygame.display.flip()
 
 
 def map(self):
     # print(' som v map')
-    with open('maps/map' + str(self) + '.txt', 'r') as f:
-        lines = f.readlines()
-        # for line in lines:
-        #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
-    map_in_gui()
+
+    global lalala
+    if lalala==0:
+        with open('maps/map' + str(self) + '.txt', 'r') as f:
+            lines = f.readlines()
+            # for line in lines:
+            #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+        lalala+=1
+        map_in_gui()
 
 
 def only_get_map(self):
@@ -250,40 +251,29 @@ def only_get_map(self):
     return
 
 
-def map_in_gui():           # tuto sa vykresli mapa
+def map_in_gui():  # tuto sa vykresli mapa
     # pygame.display.update()
     # print('map in gui')
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+                screen.blit(MARIO, (col * MARGIN + 70, row * MARGIN))
 
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
                 continue
 
-            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
+            screen.blit(WALL, (col * MARGIN + 70, row * MARGIN))
 
     pygame.display.flip()
     mario_moving_in_game(steps)
 
 
-
-
-
-
-
-
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
-    # pygame.display.update()
-    # print('draw_window')
 
     screen.fill(WHITE)
     map(self)
     only_get_map(self)
-
-    # map_in_gui()
 
 
 def game_window(self):
