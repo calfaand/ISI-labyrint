@@ -101,7 +101,6 @@ def move_right(x, y, steps):
 
 def mario_moving_in_game(steps):
     # steps = 0
-    mouse = pygame.mouse.get_pos()
 
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -110,6 +109,7 @@ def mario_moving_in_game(steps):
                 mario_is_on_y = col
                 break
     # print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
+
     run = True
     while run:
 
@@ -133,26 +133,6 @@ def mario_moving_in_game(steps):
                 if event.key == pygame.K_RIGHT:
                     print('som tu')
                     move_right(mario_is_on_x, mario_is_on_y, steps)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                    destination, starting_position = find_dest(a)
-                    res = algos.dfs(maps, destination, starting_position)
-                    print("Steps with backt = ", res)
-
-                if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                    destination, starting_position = find_dest(a)
-                    res1 = algos.bfs(maps, destination, starting_position)
-                    print("Steps with backt = ", res1)
-
-                if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                    destination, starting_position = find_dest(a)
-                    res2 = algos.greedybfs(maps, destination, starting_position)
-                    print("Steps with backt = ", res2)
-
-                if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                    destination, starting_position = find_dest(a)
-                    res3 = algos.A_Star(maps, destination, starting_position)
-                    print("Steps with backt = ", res3)
         new_map()
         pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
@@ -233,7 +213,7 @@ def new_map():
                 destination, starting_position = find_dest2(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
-                main()
+
             if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2(a)
                 res1 = algos.bfs(maps, destination, starting_position)

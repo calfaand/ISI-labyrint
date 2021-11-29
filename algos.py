@@ -93,7 +93,7 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                         if not visited_blocks[x_pos][y_pos]:
                             cost += 1
                             visited_blocks[x_pos][y_pos] = True
-                            screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
+                            screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                             pygame.time.delay(100)
                             print(x_pos, ' ', y_pos)
                             pygame.display.update()
@@ -161,7 +161,7 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
                                          curr_block.cost + 1)
 
                         visited_blocks[x_pos][y_pos] = True
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         print(cost)
@@ -241,7 +241,7 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
                         next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         visited_blocks[x_pos][y_pos] = True
 
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
@@ -344,7 +344,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                         f = h + neighbor.cost           #getting f by f = h + g
                         closed[x_pos-15][y_pos-15] = True     #adding neighbour to closed
 
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
