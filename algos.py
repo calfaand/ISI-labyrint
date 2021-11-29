@@ -74,6 +74,7 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
             print("Algorithm used = DFS")
             print("Path found!!")
             print("Total nodes visited = ", cost)
+            print()
             return curr_block.cost
         x_pos = curr_pos.x
         y_pos = curr_pos.y
@@ -95,27 +96,12 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                             visited_blocks[x_pos][y_pos] = True
                             screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                             pygame.time.delay(100)
-                            print(x_pos, ' ', y_pos)
                             pygame.display.update()
                             stack.append(create_node(x_pos, y_pos, curr_block.cost))
     return -1
 
 
 def bfs(Grid, dest: GridPosition, start: GridPosition):
-    # screen.fill(WHITE)
-    # pygame.display.flip()
-    # for row in range(len(Grid)):  # ze pocet rows
-    #     for col in range(len(Grid[0])):  # pocet cols
-    #         if Grid[row][col] == '2':
-    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-    #
-    #             continue
-    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
-    #             continue
-    #
-    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-    #
-    # pygame.display.flip()
     adj_cell_x = [1, 0, 0, -1]  # sused po x
     adj_cell_y = [0, 1, -1, 0]  # sused po y
     row, col = (len(Grid), len(Grid[0]))
@@ -135,6 +121,7 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
             print("Algorithm used = BFS")
             print("Path found!!")
             print("Total nodes visited = ", cost)
+            print()
             return curr_block.cost
 
         if curr_block not in visited_blocks:
@@ -163,10 +150,7 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
                         visited_blocks[x_pos][y_pos] = True
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
-                        # print(x_pos, ' ', y_pos)
-                        print(cost)
                         pygame.display.update()
-
                         queue.append(next_cell)
     return -1
 
@@ -174,22 +158,13 @@ def heuristic_value(curr_node,dest):
     return abs(curr_node.x - dest.x) + abs(curr_node.y - dest.y)
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
-    cc=-1
-    # screen.fill(WHITE)
-    # pygame.display.flip()
-    # for row in range(len(Grid)):  # ze pocet rows
-    #     for col in range(len(Grid[0])):  # pocet cols
-    #         if Grid[row][col] == '2':
-    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-    #
-    #             continue
-    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
-    #             cc+=1
-    #             continue
-    #
-    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-    #
-    # pygame.display.flip()
+    cc = 0
+
+    for row in range(len(Grid)):  # ze pocet rows
+        for col in range(len(Grid[0])):  # pocet cols
+            if Grid[row][col] == '0':
+                cc += 1
+                continue
 
     adj_cell_x = [-1, 0, 0, 1]
     adj_cell_y = [0, -1, 1, 0]
@@ -212,6 +187,7 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
             print("Algorithm used = GBFS")
             print("Path found!!")
             print("Total nodes visited = ", cost)
+            print()
             return current_block.cost
 
         #if current block not in visited than add in visited
@@ -243,39 +219,22 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
-                        # print(x_pos, ' ', y_pos)
                         pygame.display.update()
-                        print('cost ' ,cost)
                         q.put((h, next_cell))
                         if  cc==cost:
                             return -1
-
-
-
-
     return -1
 
 
 
 def A_Star(Grid, dest: GridPosition, start: GridPosition):
-    cc=-1
+    cc=0
 
-    # screen.fill(WHITE)
-    # pygame.display.flip()
-    # for row in range(len(Grid)):  # ze pocet rows
-    #     for col in range(len(Grid[0])):  # pocet cols
-    #         if Grid[row][col] == '2':
-    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-    #
-    #             continue
-    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
-    #             cc+=1
-    #             continue
-    #
-    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-    #
-    # pygame.display.flip()
-
+    for row in range(len(Grid)):  # ze pocet rows
+        for col in range(len(Grid[0])):  # pocet cols
+            if Grid[row][col] == '0':
+                cc+=1
+                continue
 
     # Create lists for open nodes and closed nodes
     open1 = queue.PriorityQueue()
@@ -317,6 +276,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
             print("Algorithm used = A STAR")
             print("Path found!!")
             print("Total nodes visited = ", cost)
+            print()
             return current_node.cost
 
         x_pos = current_pos.x
@@ -346,12 +306,8 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
-                        # print(x_pos, ' ', y_pos)
                         pygame.display.update()
-
                         open1.put((f, neighbor))
                         if cc == cost:
                             return -1
-
-
     return -1

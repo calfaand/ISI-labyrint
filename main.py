@@ -42,6 +42,7 @@ BFS_BTN = pygame.image.load('assets/bfs.png')
 GR_BTN = pygame.image.load('assets/greedy.png')
 ASTAR_BTN = pygame.image.load('assets/a.png')
 BACK = pygame.image.load('assets/back.png')
+END = pygame.image.load('assets/end.png')
 steps = 0
 
 
@@ -108,7 +109,6 @@ def mario_moving_in_game(steps):
                 mario_is_on_x = row
                 mario_is_on_y = col
                 break
-    # print('mario', mario_is_on_x, mario_is_on_y)        # dobre pozicie
 
     run = True
     while run:
@@ -131,20 +131,12 @@ def mario_moving_in_game(steps):
                     move_left(mario_is_on_x, mario_is_on_y, steps)
 
                 if event.key == pygame.K_RIGHT:
-                    print('som tu')
                     move_right(mario_is_on_x, mario_is_on_y, steps)
         new_map()
         pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
-
-
-
-    print(maps)
-
 def move_mario(x, y, direct):
     maps[x][y] = '5'
-
-    # print(x, y)
 
     if direct == pygame.K_UP:
         x -= 1
@@ -158,7 +150,6 @@ def move_mario(x, y, direct):
         print("oh nou")
 
     maps[x][y] = '2'
-    # print(x, y)
     return x, y
 
 
@@ -205,41 +196,43 @@ def new_map():
     screen.blit(GR_BTN, (WIDTH / 2, HEIGHT / 2 + 120))
     screen.blit(ASTAR_BTN, (WIDTH / 2, HEIGHT - 80))
     screen.blit(BACK, (0, 0))
+    screen.blit(END, (WIDTH-60, 0))
 
     mouse = pygame.mouse.get_pos()
 
     for event in pygame.event.get():
+        if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
+            quit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if 0 <= mouse[0] <= 59 and 0 <= mouse[1] <= 42:
-                c = main()
+                main()
+            if WIDTH-60 <= mouse[0] <= WIDTH and 0 <= mouse[1] <= 42:
+                quit()
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                destination, starting_position = find_dest2(a)
+                destination, starting_position = find_dest2()
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
 
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                destination, starting_position = find_dest2(a)
+                destination, starting_position = find_dest2()
                 res1 = algos.bfs(maps, destination, starting_position)
                 print("Steps with backt = ", res1)
 
-
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                destination, starting_position = find_dest2(a)
+                destination, starting_position = find_dest2()
                 res2 = algos.greedybfs(maps, destination, starting_position)
                 print("Steps with backt = ", res2)
 
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                destination, starting_position = find_dest2(a)
+                destination, starting_position = find_dest2()
                 res3 = algos.A_Star(maps, destination, starting_position)
                 print("Steps with backt = ", res3)
-            else:
-                a = 0
+
 
         # pygame.display.flip()
 
 
 def map(self):
-    # print(' som v map')
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = 0
         lines = f.readlines()
@@ -248,27 +241,11 @@ def map(self):
 
         map_in_gui()
 
-def clear_map(maps):
-    maps = None
-
-def only_get_map(self):
-    # with open('maps/map' + str(self) + '.txt', 'r') as f:
-    #     lines = f.readlines()
-    #     # for line in lines:
-    #     #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
-    # print('koniec map')
-    return
-
-
 def map_in_gui():  # tuto sa vykresli mapa
-    # pygame.display.update()
-    # print('map in gui')
-
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
                 screen.blit(MARIO, (col * MARGIN + 70, row * MARGIN))
-
                 continue
             if maps[row][col] == '0' or maps[row][col] == '3':
                 continue
@@ -282,7 +259,7 @@ def map_in_gui():  # tuto sa vykresli mapa
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
     screen.fill(WHITE)
     map(self)
-    only_get_map(self)
+    # only_get_map(self)
 
 
 def game_window(self):
@@ -298,8 +275,6 @@ def game_window(self):
         if t == 1:
             maps.clear()
             draw_window(self)  # presne tuto sa to zacykluje
-            print(maps)
-
             t += 1
 
 def main():
@@ -313,7 +288,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
-
+                quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
 
@@ -326,25 +301,16 @@ def main():
 
                 if event.key == pygame.K_RETURN:  # ked sa stlaci enter
                     if pressed == 0:
-                        print('level 1')
-
                         return game_window(1)
                     elif pressed == -1:
-                        print('level 2')
-
                         return game_window(2)
                     elif pressed == -2:
-                        print('level 3')
                         return game_window(3)
                     elif pressed == -3:
-                        print('level 4')
                         return game_window(4)
                     elif pressed == -4:
-                        print('level 5')
                         return game_window(5)
                     elif pressed == -5:
-                        print('quit')
-                        pygame.quit()
                         quit()
 
         screen.fill(WHITE)  # priprava na vypisanie na uvodnu obrazovku
@@ -366,7 +332,7 @@ def main():
         screen.blit(UP, (WIDTH / 2 - 20, 210))
         screen.blit(DOWN, (WIDTH / 2 - 16, 320))
         pygame.display.update()
-    # pygame.quit()
+        # pygame.quit()
 
 
 def find_dest(self):
@@ -379,66 +345,25 @@ def find_dest(self):
             for col in range(len(maps[0])):  # pocet cols
                 if maps[row][col] == '3':
                     destination = algos.GridPosition(row, col)
-                    # destination1 = row, col
-                    # print(destination)
 
                 if maps[row][col] == '2':
                     starting_position = algos.GridPosition(row, col)
-                    # starting_position1 = row,col
-                    # print(starting_position)
 
         return destination, starting_position
 
-def find_dest2(self):
+def find_dest2():
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '3':
                 destination = algos.GridPosition(row, col)
-                # destination1 = row, col
-                # print(destination)
 
             if maps[row][col] == '2':
                 starting_position = algos.GridPosition(row, col)
-                # starting_position1 = row,col
-                # print(starting_position)
 
     return destination, starting_position
 
 if __name__ == "__main__":
     global a
     a = main()
-    print(a)
-    print('vonku z main')
 
-    # destination, starting_position = find_dest(a)
-    # res = algos.dfs(maps, destination, starting_position)
-    # print("Steps with backt = ", res)
-    # print()
-    # print()
-    #
-    # res1 = algos.bfs(maps, destination, starting_position)
-    # print('Steps with backt1= ', res1)
-    #
-    # res2 = algos.greedybfs(maps, destination, starting_position)
-    # print("Steps with backt = ", res2)
-    # res3 = algos.A_Star(maps, destination, starting_position)
-    # print("Steps with backt = ", res3)
-    game_window(a)
-
-# dushandsa
-# run = True
-#
-#     while run:
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
-#                 run = False
-#             if event.type == pygame.MOUSEBUTTONDOWN:
-#                 if screen.blit(DFS_BTN, (100, 370)).collidepoint(pygame.mouse.get_pos()):
-#                     a = main()
-#                     destination, starting_position = find_dest(a)
-#                     res = algos.dfs(maps, destination, starting_position)
-#                     print("Steps with backt = ", res)
-#
-#             # screen.blit(BFS_BTN, (100, 420))
-#             # screen.blit(GR_BTN, (280, 370))
-#             # screen.blit(ASTAR_BTN, (280, 420))
+# dushandsa andreiiii boiiii
