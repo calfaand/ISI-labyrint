@@ -135,6 +135,7 @@ def mario_moving_in_game(steps):
         new_map()
         pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
+
 def move_mario(x, y, direct):
     maps[x][y] = '5'
 
@@ -177,7 +178,6 @@ def win_game(steps):
 
 
 def new_map():
-
     screen.fill(WHITE)
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -196,7 +196,7 @@ def new_map():
     screen.blit(GR_BTN, (WIDTH / 2, HEIGHT / 2 + 120))
     screen.blit(ASTAR_BTN, (WIDTH / 2, HEIGHT - 80))
     screen.blit(BACK, (0, 0))
-    screen.blit(END, (WIDTH-60, 0))
+    screen.blit(END, (WIDTH - 60, 0))
 
     mouse = pygame.mouse.get_pos()
 
@@ -206,7 +206,7 @@ def new_map():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if 0 <= mouse[0] <= 59 and 0 <= mouse[1] <= 42:
                 main()
-            if WIDTH-60 <= mouse[0] <= WIDTH and 0 <= mouse[1] <= 42:
+            if WIDTH - 60 <= mouse[0] <= WIDTH and 0 <= mouse[1] <= 42:
                 quit()
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2()
@@ -229,9 +229,6 @@ def new_map():
                 print("Steps with backt = ", res3)
 
 
-        # pygame.display.flip()
-
-
 def map(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = 0
@@ -240,6 +237,7 @@ def map(self):
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
 
         map_in_gui()
+
 
 def map_in_gui():  # tuto sa vykresli mapa
     for row in range(len(maps)):  # ze pocet rows
@@ -263,7 +261,6 @@ def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
 
 
 def game_window(self):
-
     clock = pygame.time.Clock()  # iba pre fps
     t = 1
     run = True
@@ -276,6 +273,7 @@ def game_window(self):
             maps.clear()
             draw_window(self)  # presne tuto sa to zacykluje
             t += 1
+
 
 def main():
     screen.fill(WHITE)
@@ -351,6 +349,7 @@ def find_dest(self):
 
         return destination, starting_position
 
+
 def find_dest2():
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -361,6 +360,7 @@ def find_dest2():
                 starting_position = algos.GridPosition(row, col)
 
     return destination, starting_position
+
 
 if __name__ == "__main__":
     global a
