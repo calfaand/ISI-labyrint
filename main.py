@@ -193,13 +193,12 @@ def new_map():
                 screen.blit(X, (col * MARGIN+70, row * MARGIN))
                 continue
             screen.blit(WALL, (col * MARGIN + 70, row * MARGIN))
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if screen.blit(DFS_BTN, (100, 370)).collidepoint(pygame.mouse.get_pos()):
-                a = main()
-                destination, starting_position = find_dest(a)
-                res = algos.dfs(maps, destination, starting_position)
-                print("Steps with backt = ", res)
+
+
+    screen.blit(DFS_BTN, (100, 370))
+    screen.blit(BFS_BTN, (100,420))
+    screen.blit(GR_BTN, (250, 370))
+    screen.blit(ASTAR_BTN, (250, 420))
 
 
 
