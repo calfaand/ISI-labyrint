@@ -41,7 +41,7 @@ DFS_BTN = pygame.image.load('assets/dfs.png')
 BFS_BTN = pygame.image.load('assets/bfs.png')
 GR_BTN = pygame.image.load('assets/greedy.png')
 ASTAR_BTN = pygame.image.load('assets/a.png')
-
+BACK = pygame.image.load('assets/back.png')
 steps = 0
 
 
@@ -204,38 +204,42 @@ def new_map():
     screen.blit(BFS_BTN, (WIDTH / 5, HEIGHT - 80))
     screen.blit(GR_BTN, (WIDTH / 2, HEIGHT / 2 + 120))
     screen.blit(ASTAR_BTN, (WIDTH / 2, HEIGHT - 80))
+    screen.blit(BACK, (0, 0))
 
     mouse = pygame.mouse.get_pos()
 
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
+            if 0 <= mouse[0] <= 59 and 0 <= mouse[1] <= 42:
+                c = main()
+            elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
 
-            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
+            elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2(a)
                 res1 = algos.bfs(maps, destination, starting_position)
                 print("Steps with backt = ", res1)
 
 
-            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
+            elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2(a)
                 res2 = algos.greedybfs(maps, destination, starting_position)
                 print("Steps with backt = ", res2)
 
-            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
+            elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2(a)
                 res3 = algos.A_Star(maps, destination, starting_position)
                 print("Steps with backt = ", res3)
+            else:
+                a = 0
 
-    # pygame.display.flip()
+        # pygame.display.flip()
 
 
 def map(self):
     # print(' som v map')
-
     with open('maps/map' + str(self) + '.txt', 'r') as f:
         lines = 0
         lines = f.readlines()
@@ -244,6 +248,8 @@ def map(self):
 
         map_in_gui()
 
+def clear_map(maps):
+    maps = None
 
 def only_get_map(self):
     # with open('maps/map' + str(self) + '.txt', 'r') as f:
@@ -274,13 +280,13 @@ def map_in_gui():  # tuto sa vykresli mapa
 
 
 def draw_window(self):  # vytvori bielu plochu a bude sa updatovat
-
     screen.fill(WHITE)
     map(self)
     only_get_map(self)
 
 
 def game_window(self):
+
     clock = pygame.time.Clock()  # iba pre fps
     t = 1
     run = True
@@ -290,6 +296,7 @@ def game_window(self):
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
                 run = False
         if t == 1:
+            maps.clear()
             draw_window(self)  # presne tuto sa to zacykluje
             print(maps)
 
@@ -301,6 +308,7 @@ def main():
     run = True
     pressed = 0
     while run:
+
         clock.tick(FPS)  # max fps 60
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # ohandlovanie X - zatvori okno
@@ -319,19 +327,21 @@ def main():
                 if event.key == pygame.K_RETURN:  # ked sa stlaci enter
                     if pressed == 0:
                         print('level 1')
-                        return 1
+
+                        return game_window(1)
                     elif pressed == -1:
                         print('level 2')
-                        return 2
+
+                        return game_window(2)
                     elif pressed == -2:
                         print('level 3')
-                        return 3
+                        return game_window(3)
                     elif pressed == -3:
                         print('level 4')
-                        return 4
+                        return game_window(4)
                     elif pressed == -4:
                         print('level 5')
-                        return 5
+                        return game_window(5)
                     elif pressed == -5:
                         print('quit')
                         pygame.quit()
