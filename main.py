@@ -43,7 +43,6 @@ GR_BTN = pygame.image.load('assets/greedy.png')
 ASTAR_BTN = pygame.image.load('assets/a.png')
 
 steps = 0
-lalala=0
 
 
 def draw_text(text, font, color, surface, x, y):
@@ -92,7 +91,6 @@ def move_left(x, y, steps):
 
 def move_right(x, y, steps):
     if maps[x][y + 1] == '0' or maps[x][y + 1] == '3' or maps[x][y + 1] == '5':
-
         if maps[x][y + 1] == '3':
             x, y = move_mario(x, y, pygame.K_RIGHT)
             win_game(steps)
@@ -103,6 +101,8 @@ def move_right(x, y, steps):
 
 def mario_moving_in_game(steps):
     # steps = 0
+    mouse = pygame.mouse.get_pos()
+
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -133,10 +133,33 @@ def mario_moving_in_game(steps):
                 if event.key == pygame.K_RIGHT:
                     print('som tu')
                     move_right(mario_is_on_x, mario_is_on_y, steps)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
+                    destination, starting_position = find_dest(a)
+                    res = algos.dfs(maps, destination, starting_position)
+                    print("Steps with backt = ", res)
 
+                if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
+                    destination, starting_position = find_dest(a)
+                    res1 = algos.bfs(maps, destination, starting_position)
+                    print("Steps with backt = ", res1)
+
+                if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
+                    destination, starting_position = find_dest(a)
+                    res2 = algos.greedybfs(maps, destination, starting_position)
+                    print("Steps with backt = ", res2)
+
+                if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
+                    destination, starting_position = find_dest(a)
+                    res3 = algos.A_Star(maps, destination, starting_position)
+                    print("Steps with backt = ", res3)
         new_map()
         pygame.display.update()  # ked je o riadok hore break, mapu vypise do cons dobru, uz len refresh obrazovky, skoci to na riadok 141
 
+
+
+
+    print(maps)
 
 def move_mario(x, y, direct):
     maps[x][y] = '5'
@@ -183,6 +206,7 @@ def win_game(steps):
 
 
 def new_map():
+
     screen.fill(WHITE)
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
@@ -206,39 +230,38 @@ def new_map():
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                destination, starting_position = find_dest(a)
+                destination, starting_position = find_dest2(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
-                return main()
+                main()
             if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                destination, starting_position = find_dest(a)
+                destination, starting_position = find_dest2(a)
                 res1 = algos.bfs(maps, destination, starting_position)
                 print("Steps with backt = ", res1)
-                return main()
+
 
             if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
-                destination, starting_position = find_dest(a)
+                destination, starting_position = find_dest2(a)
                 res2 = algos.greedybfs(maps, destination, starting_position)
                 print("Steps with backt = ", res2)
-                return main()
+
             if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
-                destination, starting_position = find_dest(a)
+                destination, starting_position = find_dest2(a)
                 res3 = algos.A_Star(maps, destination, starting_position)
                 print("Steps with backt = ", res3)
-                return main()
+
     # pygame.display.flip()
 
 
 def map(self):
     # print(' som v map')
 
-    global lalala
-    if lalala==0:
-        with open('maps/map' + str(self) + '.txt', 'r') as f:
-            lines = f.readlines()
-            # for line in lines:
-            #     maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
-        lalala+=1
+    with open('maps/map' + str(self) + '.txt', 'r') as f:
+        lines = 0
+        lines = f.readlines()
+        for line in lines:
+            maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
+
         map_in_gui()
 
 
@@ -254,6 +277,7 @@ def only_get_map(self):
 def map_in_gui():  # tuto sa vykresli mapa
     # pygame.display.update()
     # print('map in gui')
+
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -291,10 +315,8 @@ def game_window(self):
 
             t += 1
 
-
 def main():
     screen.fill(WHITE)
-
     clock = pygame.time.Clock()  # iba pre fps
     run = True
     pressed = 0
@@ -359,8 +381,8 @@ def main():
 
 def find_dest(self):
     with open('maps/map' + str(self) + '.txt', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
+        lines2 = f.readlines()
+        for line in lines2:
             maps.append(line.strip('\n').split(' '))  # map je teraz 2d arr
 
         for row in range(len(maps)):  # ze pocet rows
@@ -377,6 +399,20 @@ def find_dest(self):
 
         return destination, starting_position
 
+def find_dest2(self):
+    for row in range(len(maps)):  # ze pocet rows
+        for col in range(len(maps[0])):  # pocet cols
+            if maps[row][col] == '3':
+                destination = algos.GridPosition(row, col)
+                # destination1 = row, col
+                # print(destination)
+
+            if maps[row][col] == '2':
+                starting_position = algos.GridPosition(row, col)
+                # starting_position1 = row,col
+                # print(starting_position)
+
+    return destination, starting_position
 
 if __name__ == "__main__":
     global a
@@ -384,7 +420,7 @@ if __name__ == "__main__":
     print(a)
     print('vonku z main')
 
-    destination, starting_position = find_dest(a)
+    # destination, starting_position = find_dest(a)
     # res = algos.dfs(maps, destination, starting_position)
     # print("Steps with backt = ", res)
     # print()
