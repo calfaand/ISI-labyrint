@@ -41,20 +41,6 @@ def create_node(x, y, c):
 
 
 def dfs(Grid, dest: GridPosition, start: GridPosition):
-    # screen.fill(WHITE)
-    # pygame.display.flip()
-    # for row in range(len(Grid)):  # ze pocet rows
-    #     for col in range(len(Grid[0])):  # pocet cols
-    #         if Grid[row][col] == '2':
-    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-    #
-    #             continue
-    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
-    #             continue
-    #
-    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-    #
-    # pygame.display.flip()
     adj_cell_x = [1, 0, 0, -1] #hore, dole
     adj_cell_y = [0, 1, -1, 0] # vpravo, vlavo
     row, col = (len(Grid), len(Grid[0]))
@@ -159,7 +145,6 @@ def heuristic_value(curr_node,dest):
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
     cc = 0
-
     for row in range(len(Grid)):  # ze pocet rows
         for col in range(len(Grid[0])):  # pocet cols
             if Grid[row][col] == '0':
@@ -216,7 +201,6 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
                         h = heuristic_value(post, dest)         #getting heuristic value of the neighbours
                         next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         visited_blocks[x_pos][y_pos] = True
-
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         pygame.display.update()
@@ -229,7 +213,6 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
 def A_Star(Grid, dest: GridPosition, start: GridPosition):
     cc=0
-
     for row in range(len(Grid)):  # ze pocet rows
         for col in range(len(Grid[0])):  # pocet cols
             if Grid[row][col] == '0':
@@ -257,15 +240,9 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
     # Loop until the open list is empty
     while open1:
-
-    # Sort the open list to get the node with the lowest cost first
-    # no need cuz priority queue
-    # Get the node with the lowest cost
-
         current = open1.get()       #getting least cost node as open1 is a priority queue
         current_node = current[1]   #getting node in cuurent node
         current_pos = current_node.pos
-
     # Add the current node to the closed list
         if current_node not in closed:
             closed[current_pos.x-15][current_pos.y-15] = True
@@ -281,7 +258,6 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
         x_pos = current_pos.x
         y_pos = current_pos.y
-
     # Get neighbours
         for i in range(cells):
             if x_pos == len(Grid) - 1 and adj_cell_x[i] == 1:
@@ -291,11 +267,9 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
             if y_pos == 0 and adj_cell_y[i] == -1:
                 x_pos = current_pos.x + adj_cell_x[i]
                 y_pos = current_pos.y
-
             else:
                 x_pos = current_pos.x + adj_cell_x[i]
                 y_pos = current_pos.y + adj_cell_y[i]
-
             if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
                 if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
                     if not closed[x_pos-15][y_pos-15]:
@@ -303,7 +277,6 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                         h = heuristic_value(neighbor.pos, dest)      #get heuristic value of neighbours
                         f = h + neighbor.cost           #getting f by f = h + g
                         closed[x_pos-15][y_pos-15] = True     #adding neighbour to closed
-
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         pygame.display.update()
