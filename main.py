@@ -45,7 +45,6 @@ ASTAR_BTN = pygame.image.load('assets/a.png')
 
 steps = 0
 
-
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -195,6 +194,7 @@ def new_map():
                 screen.blit(X, (col * MARGIN+70, row * MARGIN))
                 continue
             screen.blit(WALL, (col * MARGIN + 70, row * MARGIN))
+
     screen.blit(DFS_BTN, (WIDTH/5, HEIGHT/2+120))
     screen.blit(BFS_BTN, (WIDTH/5, HEIGHT-80))
     screen.blit(GR_BTN, (WIDTH/2, HEIGHT/2+120))
@@ -208,7 +208,23 @@ def new_map():
                 destination, starting_position = find_dest(a)
                 res = algos.dfs(maps, destination, starting_position)
                 print("Steps with backt = ", res)
-                pygame.quit()
+
+            if WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
+                destination, starting_position = find_dest(a)
+                res1 = algos.bfs(maps, destination, starting_position)
+                print("Steps with backt = ", res1)
+
+
+            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
+                destination, starting_position = find_dest(a)
+                res2 = algos.greedybfs(maps, destination, starting_position)
+                print("Steps with backt = ", res2)
+
+
+            if WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT-80 <= mouse[1] <= HEIGHT-37:
+                destination, starting_position = find_dest(a)
+                res3 = algos.A_Star(maps, destination, starting_position)
+                print("Steps with backt = ", res3)
 
 
 
@@ -237,7 +253,6 @@ def only_get_map(self):
 def map_in_gui():           # tuto sa vykresli mapa
     # pygame.display.update()
     # print('map in gui')
-
     for row in range(len(maps)):  # ze pocet rows
         for col in range(len(maps[0])):  # pocet cols
             if maps[row][col] == '2':
@@ -288,6 +303,8 @@ def game_window(self):
 
 
 def main():
+    screen.fill(WHITE)
+
     clock = pygame.time.Clock()  # iba pre fps
     run = True
     pressed = 0
@@ -377,7 +394,6 @@ if __name__ == "__main__":
     a = main()
     print(a)
     print('vonku z main')
-    new_map()
 
     destination, starting_position = find_dest(a)
     # res = algos.dfs(maps, destination, starting_position)

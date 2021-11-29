@@ -41,20 +41,20 @@ def create_node(x, y, c):
 
 
 def dfs(Grid, dest: GridPosition, start: GridPosition):
-    screen.fill(WHITE)
-    pygame.display.flip()
-    for row in range(len(Grid)):  # ze pocet rows
-        for col in range(len(Grid[0])):  # pocet cols
-            if Grid[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-
-                continue
-            if Grid[row][col] == '0' or Grid[row][col] == '3':
-                continue
-
-            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
-    pygame.display.flip()
+    # screen.fill(WHITE)
+    # pygame.display.flip()
+    # for row in range(len(Grid)):  # ze pocet rows
+    #     for col in range(len(Grid[0])):  # pocet cols
+    #         if Grid[row][col] == '2':
+    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+    #
+    #             continue
+    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
+    #             continue
+    #
+    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
+    #
+    # pygame.display.flip()
     adj_cell_x = [1, 0, 0, -1] #hore, dole
     adj_cell_y = [0, 1, -1, 0] # vpravo, vlavo
     row, col = (len(Grid), len(Grid[0]))
@@ -93,7 +93,7 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                         if not visited_blocks[x_pos][y_pos]:
                             cost += 1
                             visited_blocks[x_pos][y_pos] = True
-                            screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
+                            screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
                             pygame.time.delay(100)
                             print(x_pos, ' ', y_pos)
                             pygame.display.update()
@@ -102,20 +102,20 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
 
 
 def bfs(Grid, dest: GridPosition, start: GridPosition):
-    screen.fill(WHITE)
-    pygame.display.flip()
-    for row in range(len(Grid)):  # ze pocet rows
-        for col in range(len(Grid[0])):  # pocet cols
-            if Grid[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-
-                continue
-            if Grid[row][col] == '0' or Grid[row][col] == '3':
-                continue
-
-            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
-    pygame.display.flip()
+    # screen.fill(WHITE)
+    # pygame.display.flip()
+    # for row in range(len(Grid)):  # ze pocet rows
+    #     for col in range(len(Grid[0])):  # pocet cols
+    #         if Grid[row][col] == '2':
+    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+    #
+    #             continue
+    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
+    #             continue
+    #
+    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
+    #
+    # pygame.display.flip()
     adj_cell_x = [1, 0, 0, -1]  # sused po x
     adj_cell_y = [0, 1, -1, 0]  # sused po y
     row, col = (len(Grid), len(Grid[0]))
@@ -161,7 +161,7 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
                                          curr_block.cost + 1)
 
                         visited_blocks[x_pos][y_pos] = True
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         print(cost)
@@ -175,21 +175,21 @@ def heuristic_value(curr_node,dest):
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
     cc=-1
-    screen.fill(WHITE)
-    pygame.display.flip()
-    for row in range(len(Grid)):  # ze pocet rows
-        for col in range(len(Grid[0])):  # pocet cols
-            if Grid[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-
-                continue
-            if Grid[row][col] == '0' or Grid[row][col] == '3':
-                cc+=1
-                continue
-
-            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
-    pygame.display.flip()
+    # screen.fill(WHITE)
+    # pygame.display.flip()
+    # for row in range(len(Grid)):  # ze pocet rows
+    #     for col in range(len(Grid[0])):  # pocet cols
+    #         if Grid[row][col] == '2':
+    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+    #
+    #             continue
+    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
+    #             cc+=1
+    #             continue
+    #
+    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
+    #
+    # pygame.display.flip()
 
     adj_cell_x = [-1, 0, 0, 1]
     adj_cell_y = [0, -1, 1, 0]
@@ -241,7 +241,7 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
                         next_cell = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         visited_blocks[x_pos][y_pos] = True
 
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
@@ -260,21 +260,21 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 def A_Star(Grid, dest: GridPosition, start: GridPosition):
     cc=-1
 
-    screen.fill(WHITE)
-    pygame.display.flip()
-    for row in range(len(Grid)):  # ze pocet rows
-        for col in range(len(Grid[0])):  # pocet cols
-            if Grid[row][col] == '2':
-                screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
-
-                continue
-            if Grid[row][col] == '0' or Grid[row][col] == '3':
-                cc+=1
-                continue
-
-            screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
-
-    pygame.display.flip()
+    # screen.fill(WHITE)
+    # pygame.display.flip()
+    # for row in range(len(Grid)):  # ze pocet rows
+    #     for col in range(len(Grid[0])):  # pocet cols
+    #         if Grid[row][col] == '2':
+    #             screen.blit(MARIO, (col * MARGIN+70, row * MARGIN))
+    #
+    #             continue
+    #         if Grid[row][col] == '0' or Grid[row][col] == '3':
+    #             cc+=1
+    #             continue
+    #
+    #         screen.blit(WALL, (col * MARGIN+70, row * MARGIN))
+    #
+    # pygame.display.flip()
 
 
     # Create lists for open nodes and closed nodes
@@ -344,7 +344,7 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                         f = h + neighbor.cost           #getting f by f = h + g
                         closed[x_pos][y_pos] = True     #adding neighbour to closed
 
-                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
+                        screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN-360))
                         pygame.time.delay(100)
                         # print(x_pos, ' ', y_pos)
                         pygame.display.update()
