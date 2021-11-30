@@ -211,22 +211,39 @@ def new_map():
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2()
                 res = algos.dfs(maps, destination, starting_position)
-                print("Steps with backt = ", res)
-
+                if res!= -1:
+                    print("DFS Steps back = ", res)
+                    print()
+                else:
+                    print("DFS Path not found!")
+                    print()
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2()
                 res1 = algos.bfs(maps, destination, starting_position)
-                print("Steps with backt = ", res1)
-
+                if res1 != -1:
+                    print("BFS Steps back = ", res1)
+                    print()
+                else:
+                    print("BFS Path not found!")
+                    print()
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2()
                 res2 = algos.greedybfs(maps, destination, starting_position)
-                print("Steps with backt = ", res2)
-
+                if res2 != -1:
+                    print("GREEDY Steps back = ", res2)
+                    print()
+                else:
+                    print("GREEDY Path not found!")
+                    print()
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2()
                 res3 = algos.A_Star(maps, destination, starting_position)
-                print("Steps with backt = ", res3)
+                if res3 != -1:
+                    print("A* Steps back = ", res3)
+                    print()
+                else:
+                    print("A* Path not found!")
+                    print()
 
 
 def map(self):

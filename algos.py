@@ -6,6 +6,9 @@ import pygame
 pygame.init()
 MARGIN = 24
 WHITE = (255, 255, 255)
+BROWN = (42, 30, 35)
+BROWNLIGHT = (93, 84, 88)
+font = "Visitor TT1 BRK"
 
 
 WIDTH, HEIGHT = 500, 500
@@ -14,6 +17,12 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 WALL = pygame.image.load('assets/wall.png')
 MARIO = pygame.image.load('assets/mario.png')
 
+
+
+def text_format(message, textFont, textSize, textColor):
+    newFont = pygame.font.SysFont(textFont, textSize)
+    newText = newFont.render(message, 0, textColor)
+    return newText
 
 
 class GridPosition:
@@ -41,6 +50,7 @@ def create_node(x, y, c):
 
 
 def dfs(Grid, dest: GridPosition, start: GridPosition):
+    counter = -1
     adj_cell_x = [1, 0, 0, -1] #hore, dole
     adj_cell_y = [0, 1, -1, 0] # vpravo, vlavo
     row, col = (len(Grid), len(Grid[0]))
@@ -57,10 +67,17 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
         curr_block = stack.pop()
         curr_pos = curr_block.pos
         if (curr_pos.x == dest.x and curr_pos.y == dest.y):  # nastavit asi jak global v main ze maps dest.x a dest.y
-            print("Algorithm used = DFS")
-            print("Path found!!")
-            print("Total nodes visited = ", cost)
-            print()
+            for row in range(len(Grid)):  # ze pocet rows
+                for col in range(len(Grid[0])):  # pocet cols
+                    if visited_blocks[row][col] == True:
+                        counter += 1
+                        continue
+            print("DFS Total blocks visited = ", counter)
+            # steps_text = text_format('DFS Total nodes visited' + str(counter), font, 70, BROWN)
+            # steps_text2 = text_format('DFS Total nodes visited' + str(counter), font, 70, BROWNLIGHT)
+            # screen.blit(steps_text, (0, 0))
+            # screen.blit(steps_text2, (0, 0))
+            pygame.time.delay(4000)
             return curr_block.cost
         x_pos = curr_pos.x
         y_pos = curr_pos.y
@@ -84,10 +101,12 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                             pygame.time.delay(100)
                             pygame.display.update()
                             stack.append(create_node(x_pos, y_pos, curr_block.cost))
+
     return -1
 
 
 def bfs(Grid, dest: GridPosition, start: GridPosition):
+    counter = -1
     adj_cell_x = [1, 0, 0, -1]  # sused po x
     adj_cell_y = [0, 1, -1, 0]  # sused po y
     row, col = (len(Grid), len(Grid[0]))
@@ -104,10 +123,18 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
         curr_pos = curr_block.pos
 
         if curr_pos.x == dest.x and curr_pos.y == dest.y:
-            print("Algorithm used = BFS")
-            print("Path found!!")
-            print("Total nodes visited = ", cost)
-            print()
+            for row in range(len(Grid)):  # ze pocet rows
+                for col in range(len(Grid[0])):  # pocet cols
+                    if visited_blocks[row][col] == True:
+                        counter += 1
+                        continue
+
+            print("BFS Total nodes visited = ", counter)
+            steps_text = text_format('BFS Total nodes visited'+ str(counter), font, 70, BROWN)
+            # steps_text2 = text_format('BFS Total nodes visited'+ str(counter), font, 70, BROWNLIGHT)
+            # screen.blit(steps_text, (0, 400))
+            # screen.blit(steps_text2, (4, 404))
+            # pygame.time.delay(4000)
             return curr_block.cost
 
         if curr_block not in visited_blocks:
@@ -145,6 +172,7 @@ def heuristic_value(curr_node,dest):
 
 def greedybfs(Grid, dest: GridPosition, start: GridPosition):
     cc = 0
+    counter = -1
     for row in range(len(Grid)):  # ze pocet rows
         for col in range(len(Grid[0])):  # pocet cols
             if Grid[row][col] == '0':
@@ -169,10 +197,13 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
        #if goal found than return cost
         if current_pos.x == dest.x and current_pos.y == dest.y:
-            print("Algorithm used = GBFS")
-            print("Path found!!")
-            print("Total nodes visited = ", cost)
-            print()
+            for row in range(len(Grid)):  # ze pocet rows
+                for col in range(len(Grid[0])):  # pocet cols
+                    if visited_blocks[row][col] == True:
+                        counter += 1
+                        continue
+
+            print("GREEDY Total nodes visited = ", counter)
             return current_block.cost
 
         #if current block not in visited than add in visited
@@ -213,6 +244,7 @@ def greedybfs(Grid, dest: GridPosition, start: GridPosition):
 
 def A_Star(Grid, dest: GridPosition, start: GridPosition):
     cc=0
+    counter = -1
     for row in range(len(Grid)):  # ze pocet rows
         for col in range(len(Grid[0])):  # pocet cols
             if Grid[row][col] == '0':
@@ -221,9 +253,9 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
 
     # Create lists for open nodes and closed nodes
     open1 = queue.PriorityQueue()
-    closed = [[False for i in range(len(Grid))]
+    visited_blocks = [[False for i in range(len(Grid))]
                       for j in range(len(Grid[0]))]
-    closed[start.x-15][start.y-15] = True
+    visited_blocks[start.x][start.y] = True
 
     #using these cell arrays to get neighbours
     adj_cell_x = [-1, 0, 0, 1]
@@ -241,20 +273,23 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
     # Loop until the open list is empty
     while open1:
         current = open1.get()       #getting least cost node as open1 is a priority queue
-        current_node = current[1]   #getting node in cuurent node
-        current_pos = current_node.pos
+        current_block = current[1]   #getting node in cuurent node
+        current_pos = current_block.pos
     # Add the current node to the closed list
-        if current_node not in closed:
-            closed[current_pos.x-15][current_pos.y-15] = True
+        if current_block not in visited_blocks:
+            visited_blocks[current_pos.x-15][current_pos.y-15] = True
             cost = cost + 1
 
     # Check if we have reached the goal, return the path (From Current Node to Start Node By Node.parent)
         if current_pos.x == dest.x and current_pos.y == dest.y:
-            print("Algorithm used = A STAR")
-            print("Path found!!")
-            print("Total nodes visited = ", cost)
-            print()
-            return current_node.cost
+            for row in range(len(Grid)):  # ze pocet rows
+                for col in range(len(Grid[0])):  # pocet cols
+                    if visited_blocks[row][col] == True:
+                        counter += 1
+                        continue
+
+            print("A* Total nodes visited = ", counter)
+            return current_block.cost
 
         x_pos = current_pos.x
         y_pos = current_pos.y
@@ -272,11 +307,11 @@ def A_Star(Grid, dest: GridPosition, start: GridPosition):
                 y_pos = current_pos.y + adj_cell_y[i]
             if x_pos < len(Grid) and y_pos < len(Grid[0]) and x_pos >= 0 and y_pos >= 0:
                 if Grid[x_pos][y_pos] == '0' or Grid[x_pos][y_pos] == '3':
-                    if not closed[x_pos-15][y_pos-15]:
-                        neighbor = Node(GridPosition(x_pos, y_pos), current_node.cost + 1)
+                    if not visited_blocks[x_pos-15][y_pos-15]:
+                        neighbor = Node(GridPosition(x_pos, y_pos), current_block.cost + 1)
                         h = heuristic_value(neighbor.pos, dest)      #get heuristic value of neighbours
                         f = h + neighbor.cost           #getting f by f = h + g
-                        closed[x_pos-15][y_pos-15] = True     #adding neighbour to closed
+                        visited_blocks[x_pos-15][y_pos-15] = True     #adding neighbour to closed
                         screen.blit(X, (y_pos * MARGIN+70, x_pos * MARGIN))
                         pygame.time.delay(100)
                         pygame.display.update()
