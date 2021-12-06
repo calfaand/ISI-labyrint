@@ -73,11 +73,6 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                         counter += 1
                         continue
             print("DFS Total blocks visited = ", counter)
-            # steps_text = text_format('DFS Total nodes visited' + str(counter), font, 70, BROWN)
-            # steps_text2 = text_format('DFS Total nodes visited' + str(counter), font, 70, BROWNLIGHT)
-            # screen.blit(steps_text, (0, 0))
-            # screen.blit(steps_text2, (0, 0))
-            pygame.time.delay(4000)
             return curr_block.cost
         x_pos = curr_pos.x
         y_pos = curr_pos.y
@@ -101,7 +96,6 @@ def dfs(Grid, dest: GridPosition, start: GridPosition):
                             pygame.time.delay(100)
                             pygame.display.update()
                             stack.append(create_node(x_pos, y_pos, curr_block.cost))
-
     return -1
 
 
@@ -131,10 +125,6 @@ def bfs(Grid, dest: GridPosition, start: GridPosition):
 
             print("BFS Total nodes visited = ", counter)
             steps_text = text_format('BFS Total nodes visited'+ str(counter), font, 70, BROWN)
-            # steps_text2 = text_format('BFS Total nodes visited'+ str(counter), font, 70, BROWNLIGHT)
-            # screen.blit(steps_text, (0, 400))
-            # screen.blit(steps_text2, (4, 404))
-            # pygame.time.delay(4000)
             return curr_block.cost
 
         if curr_block not in visited_blocks:

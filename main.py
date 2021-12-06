@@ -3,6 +3,7 @@ from enum import Enum
 from pygame.locals import *
 import algos
 import sys
+from time import time
 
 pygame.init()
 pygame.font.init()
@@ -210,39 +211,55 @@ def new_map():
                 quit()
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2()
+                t0=time()
                 res = algos.dfs(maps, destination, starting_position)
+                t1=time()
                 if res!= -1:
                     print("DFS Steps back = ", res)
+                    print("Time elapsed = ", round(t1-t0,4), "seconds")
                     print()
                 else:
                     print("DFS Path not found!")
+                    print("Time elapsed = ", t1 - t0, "seconds")
                     print()
             elif WIDTH / 5 <= mouse[0] <= WIDTH / 5 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2()
+                t0 = time()
                 res1 = algos.bfs(maps, destination, starting_position)
+                t1 = time()
                 if res1 != -1:
                     print("BFS Steps back = ", res1)
+                    print("Time elapsed = ", round(t1-t0,4), "seconds")
                     print()
                 else:
                     print("BFS Path not found!")
+                    print("Time elapsed = ", t1 - t0, "seconds")
                     print()
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT / 2 + 120 <= mouse[1] <= HEIGHT / 2 + 163:
                 destination, starting_position = find_dest2()
+                t0 = time()
                 res2 = algos.greedybfs(maps, destination, starting_position)
+                t1 = time()
                 if res2 != -1:
                     print("GREEDY Steps back = ", res2)
+                    print("Time elapsed = ", round(t1-t0,4), "seconds")
                     print()
                 else:
                     print("GREEDY Path not found!")
+                    print("Time elapsed = ", t1 - t0, "seconds")
                     print()
             elif WIDTH / 2 <= mouse[0] <= WIDTH / 2 + 100 and HEIGHT - 80 <= mouse[1] <= HEIGHT - 37:
                 destination, starting_position = find_dest2()
+                t0 = time()
                 res3 = algos.A_Star(maps, destination, starting_position)
+                t1 = time()
                 if res3 != -1:
                     print("A* Steps back = ", res3)
+                    print("Time elapsed = ", round(t1-t0,4), "seconds")
                     print()
                 else:
                     print("A* Path not found!")
+                    print("Time elapsed = ", t1 - t0, "seconds")
                     print()
 
 
